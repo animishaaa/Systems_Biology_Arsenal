@@ -1,0 +1,325 @@
+# 📊 Measurement Scales in R
+
+Understanding the four measurement scales is essential for choosing the correct statistical analysis and data structure in R.
+
+---
+
+# 🧩 1️⃣ Nominal Scale
+
+## 💡 What is a Nominal Scale?
+
+A **nominal scale** classifies data into **categories without any meaningful order**.
+
+### Examples
+
+- Sex
+- Smoking status
+- Blood type
+- Eye color
+
+### R Data Type
+
+Use:
+
+```r
+factor()
+```
+
+---
+
+## 🧩 Example
+
+```r
+# Nominal example
+
+Sex <- c("Male", "Female", "Female", "Male", "Male")
+
+Sex <- factor(Sex)
+
+# Display and summarize
+Sex
+summary(Sex)
+
+# Plot
+plot(
+  Sex,
+  main = "Nominal Variable: Sex",
+  col = "skyblue"
+)
+```
+
+---
+
+# 🧩 2️⃣ Ordinal Scale
+
+## 💡 What is an Ordinal Scale?
+
+An **ordinal scale** contains categories that have a **meaningful order**, but the difference between categories is **not necessarily equal**.
+
+### Examples
+
+- Disease severity
+  - Mild
+  - Moderate
+  - Severe
+- Education level
+- Customer satisfaction
+
+### R Data Type
+
+Use:
+
+```r
+ordered()
+
+# or
+
+factor(..., ordered = TRUE)
+```
+
+---
+
+## 🧩 Example
+
+```r
+# Ordinal example
+
+Disease <- c("Mi", "Mo", "Se", "Mo", "Se", "Se")
+
+Disease <- ordered(
+  Disease,
+  levels = c("Mi", "Mo", "Se")
+)
+
+# Display and summarize
+Disease
+summary(Disease)
+
+# Plot
+plot(
+  Disease,
+  main = "Ordinal Variable: Disease Severity",
+  col = "lightgreen"
+)
+```
+
+---
+
+# 🧩 3️⃣ Interval Scale
+
+## 💡 What is an Interval Scale?
+
+An **interval scale** consists of numeric values with **equal intervals** between them, but **no true zero**.
+
+Because there is no true zero, ratios are not meaningful.
+
+### Examples
+
+- Temperature (°C or °F)
+- IQ score
+- Calendar years
+
+### R Data Type
+
+Use:
+
+```r
+numeric
+```
+
+---
+
+## 🧩 Example
+
+```r
+# Interval example
+
+Temperature <- c(15, 20, 25, 30, 35)
+
+# Display and summarize
+Temperature
+summary(Temperature)
+
+# Plot
+plot(
+  Temperature,
+  type = "b",
+  main = "Interval Variable: Temperature",
+  xlab = "Index",
+  ylab = "Temperature (°C)"
+)
+```
+
+---
+
+# 🧩 4️⃣ Ratio Scale
+
+## 💡 What is a Ratio Scale?
+
+A **ratio scale** contains numeric values with:
+
+- Equal intervals
+- A **true zero**
+
+Since zero means "none", ratios are meaningful.
+
+For example:
+
+- 80 kg is twice as heavy as 40 kg.
+- 20 years is twice as old as 10 years.
+
+### Examples
+
+- Weight
+- Height
+- Age
+- Income
+- Distance
+
+### R Data Type
+
+Use:
+
+```r
+numeric
+```
+
+---
+
+## 🧩 Example
+
+```r
+# Ratio example
+
+Weight <- c(50, 60, 70, 80, 90)
+
+# Display and summarize
+Weight
+summary(Weight)
+
+# Plot
+plot(
+  Weight,
+  type = "b",
+  main = "Ratio Variable: Weight",
+  xlab = "Index",
+  ylab = "Weight (kg)"
+)
+```
+
+---
+
+# 🧠 Summary Table
+
+| Measurement Scale | Examples | R Function / Type | Variable Type |
+|-------------------|----------|-------------------|---------------|
+| Nominal | Sex, Smoking | `factor()` | Categorical |
+| Ordinal | Disease severity | `ordered()` | Ordered categorical |
+| Interval | Temperature (°C), IQ | `numeric` | Continuous |
+| Ratio | Weight, Height, Age | `numeric` | Continuous |
+
+---
+
+# ✅ Quick Tips
+
+- **`factor()`** → Nominal variables (no order)
+- **`ordered()`** → Ordinal variables (ordered categories)
+- **`numeric`** → Interval and ratio variables (continuous numbers)
+
+---
+
+# 📈 Understanding `type = "b"` in `plot()`
+
+The `type` argument tells R **how to draw the plot**.
+
+## Common Plot Types
+
+| Type | Meaning | Appearance |
+|------|---------|------------|
+| `"p"` | Points only (default) | ● ● ● |
+| `"l"` | Lines only | ───── |
+| `"b"` | Both points and lines | ●──●──● |
+| `"o"` | Overplotted points and lines | ● on the line |
+| `"h"` | Vertical lines (histogram-like) | │ │ │ |
+| `"n"` | No plotting (only axes) | Empty graph |
+
+### Example
+
+```r
+plot(
+  Temperature,
+  type = "b"
+)
+```
+
+This draws:
+
+- **Points** at each observation.
+- **Lines** connecting the points.
+
+---
+
+# 📍 What Does "Index" Mean?
+
+In the interval and ratio examples, only a **single vector** is provided.
+
+```r
+Temperature <- c(15, 20, 25, 30, 35)
+```
+
+Since no x-axis values are supplied, R automatically assigns an **index**.
+
+| Index | Temperature (°C) |
+|------:|-----------------:|
+| 1 | 15 |
+| 2 | 20 |
+| 3 | 25 |
+| 4 | 30 |
+| 5 | 35 |
+
+So R is effectively plotting:
+
+```r
+plot(
+  x = c(1, 2, 3, 4, 5),
+  y = Temperature,
+  type = "b"
+)
+```
+
+The **index** simply represents the **position of each element** in the vector.
+
+For example:
+
+```r
+Temperature[1]
+```
+
+returns
+
+```r
+[1] 15
+```
+
+and
+
+```r
+Temperature[4]
+```
+
+returns
+
+```r
+[1] 30
+```
+
+---
+
+# 📝 Key Takeaways
+
+- **Nominal** → Categories with no order → `factor()`
+- **Ordinal** → Ordered categories → `ordered()`
+- **Interval** → Numeric values with equal intervals but no true zero → `numeric`
+- **Ratio** → Numeric values with equal intervals and a true zero → `numeric`
+- **`type = "b"`** draws **both points and connecting lines**.
+- **Index** is the automatic x-axis generated by R when no x-values are provided.
