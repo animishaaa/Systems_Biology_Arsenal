@@ -63,6 +63,7 @@ Graphs help us
 | Q-Q Plot | Check normality |
 
 ---
+---
 
 # 📊 Bar Plot in R
 
@@ -262,6 +263,7 @@ With error bars
 Much more informative.
 
 ---
+---
 
 # 📈 Histogram
 
@@ -379,6 +381,7 @@ If the histogram follows the blue curve,
 ✅ Data are approximately normally distributed.
 
 ---
+---
 
 # 📐 Normal Q-Q Plot
 
@@ -434,6 +437,7 @@ Always check before performing:
 - ANOVA
 - Linear Regression
 
+---
 ---
 
 # 📚 R Graph Cheat Sheet
