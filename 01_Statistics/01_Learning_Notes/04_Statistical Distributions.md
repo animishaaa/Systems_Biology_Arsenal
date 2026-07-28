@@ -231,6 +231,23 @@ Used when
 
 It looks similar to the normal distribution but has **heavier tails**, reflecting greater uncertainty.
 
+```
+        **
+      *    *
+    *        *
+  *            *
+-------------------------
+```
+As sample size increases,
+
+```
+t Distribution
+
+↓
+
+Normal Distribution
+```
+
 ### 🧪 Used In
 
 - One-sample t-test
@@ -283,7 +300,24 @@ Used for **counting how many events occur** during a fixed time or space.
 
 ### ❓ Question Answered
 
-> **"How many events are likely to occur?"**
+> **"How many events are likely to occur?"** (Predicts what counts you likely get in future)
+
+```
+*
+**
+****
+******
+********
+******
+***
+*
+```
+
+### Characteristics
+
+- Counts
+- Discrete
+- Cannot be negative
 
 ### 🧪 Used In
 
