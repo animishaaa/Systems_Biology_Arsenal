@@ -231,20 +231,6 @@ Each weight appears **once**.
 
 ---
 
-## ❌ Common Mistake
-
-```r
-prop. table(my_table)
-```
-
-```
-Error: unexpected symbol
-```
-
-The function name is **`prop.table()`**, not `prop. table()`.
-
----
-
 ## Proportion Table
 
 ```r
@@ -349,9 +335,9 @@ Standard Error estimates how accurately the **sample mean** represents the **pop
 
 ### Formula
 
-\[
+$$
 SE = \frac{SD}{\sqrt{n}}
-\]
+$$
 
 ---
 
