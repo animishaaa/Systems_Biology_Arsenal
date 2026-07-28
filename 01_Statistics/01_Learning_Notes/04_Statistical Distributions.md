@@ -91,6 +91,58 @@ Rolling a fair die:
 > **"What is likely to happen?"**
 
 ---
+# 🍎 Example Using Fruits
+
+Suppose a teacher asks **20 students** their favorite fruit.
+
+The answers are:
+
+🍎 Apple = 8
+
+🍌 Banana = 6
+
+🍇 Grapes = 4
+
+🍊 Orange = 2
+
+---
+
+## 📋 Frequency Distribution
+
+| 🍓 Fruit | 🔢 Frequency |
+|----------|------------:|
+| 🍎 Apple | 8 |
+| 🍌 Banana | 6 |
+| 🍇 Grapes | 4 |
+| 🍊 Orange | 2 |
+
+This answers
+
+> **"How many students chose each fruit?"**
+
+---
+
+## 🎲 Probability Distribution
+
+Now divide each frequency by the total number of students (**20**).
+
+| 🍓 Fruit | 📈 Probability |
+|----------|--------------:|
+| 🍎 Apple | 8 / 20 = 0.40 (40%) |
+| 🍌 Banana | 6 / 20 = 0.30 (30%) |
+| 🍇 Grapes | 4 / 20 = 0.20 (20%) |
+| 🍊 Orange | 2 / 20 = 0.10 (10%) |
+
+Now the table answers
+
+> **"If I randomly pick one student, what is the probability they chose each fruit?"**
+
+Notice:
+
+- 📋 Frequency = counts
+- 🎲 Probability = likelihood
+
+---
 
 # 📚 Common Probability Distributions
 
