@@ -469,7 +469,7 @@ Predict one continuous variable from another.
 
 ---
 
-# 🎯 Exam Decision Tree
+# 🎯 Decision Tree
 
 ```text
 Continuous?
