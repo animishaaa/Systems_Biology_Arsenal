@@ -4,7 +4,7 @@
 >
 > **The Ultimate Decision Tree for Choosing Statistical Tests**
 >
-> This guide summarizes every statistical test covered in **SY768A**, including:
+> This guide summarizes every statistical test, including:
 >
 > - Parametric tests
 > - Non-parametric tests
