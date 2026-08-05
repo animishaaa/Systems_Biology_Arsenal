@@ -142,7 +142,7 @@ Relationship?          Frequencies?
 One Group
       │
       ▼
-Normal?
+   Normal?
  │         │
 Yes       No
  │         │
@@ -157,7 +157,7 @@ One-sample Wilcoxon
 Two Groups
       │
       ▼
-Independent?
+ Independent?
  │          │
 Yes        No
  │          │
@@ -181,7 +181,7 @@ Whitney      Signed-Rank
 Three or More Groups
       │
       ▼
-Independent?
+  Independent?
  │            │
 Yes          No
  │            │
