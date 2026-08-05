@@ -139,16 +139,16 @@ Relationship?          Frequencies?
 ## Continuous Data
 
 ```text
-One Group
-      │
-      ▼
-   Normal?
- │         │
-Yes       No
- │         │
- ▼         ▼
-One-sample t-test
-One-sample Wilcoxon
+     One Group
+         │
+         ▼
+       Normal?
+ │                  │
+Yes                 No
+ │                  │
+ ▼                  ▼
+One-sample          One-sample Wilcoxon
+t-test 
 ```
 
 ---
@@ -157,22 +157,22 @@ One-sample Wilcoxon
 Two Groups
       │
       ▼
- Independent?
- │          │
-Yes        No
- │          │
- ▼          ▼
-Independent Paired
-t-test      t-test
- │           │
-Not Normal? Not Normal?
- │           │
- ▼           ▼
-Mann-        Wilcoxon
-Whitney      Signed-Rank
-             │
-             ▼
-         Sign Test
+    Independent?
+ │               │
+Yes              No
+ │               │
+ ▼               ▼
+Independent    Paired
+t-test          t-test
+ │               │
+Not Normal?    Not Normal?
+ │               │
+ ▼               ▼
+Mann-         Wilcoxon
+Whitney       Signed-Rank
+                 │
+                 ▼
+              Sign Test
 ```
 
 ---
