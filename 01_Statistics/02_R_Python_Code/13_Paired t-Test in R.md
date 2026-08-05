@@ -1,6 +1,6 @@
 # 🧪 Paired t-Test in R
 
-> **SY768A – Data Analysis for Life Science**
+> **Data Analysis for Life Science**
 
 The **Paired t-test** compares the **means of two related measurements** to determine whether they differ significantly.
 
