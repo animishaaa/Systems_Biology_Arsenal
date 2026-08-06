@@ -4,7 +4,7 @@
 
 Python collections are used to **store multiple pieces of information**. They are the foundation of data analysis, scientific computing, and machine learning.
 
-In this chapter, you'll learn the four built-in Python collections:
+In this chapter, learn the four built-in Python collections:
 
 - 📋 Lists
 - 📦 Tuples
