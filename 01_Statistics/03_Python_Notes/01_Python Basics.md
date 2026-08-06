@@ -2,7 +2,7 @@
 
 > **A Beginner's Guide to Python for Statistics, Data Science, and Bioinformatics**
 
-Python is one of the most popular programming languages in science and engineering. This guide introduces the fundamental concepts you'll need before learning statistical analysis with Python.
+Python is one of the most popular programming languages in science and engineering. This guide introduces the fundamental concepts need before learning statistical analysis with Python.
 
 ---
 
@@ -43,7 +43,7 @@ Python is easy to read, beginner-friendly, and has thousands of scientific libra
 
 # 🚀 Why Learn Python?
 
-Python allows you to:
+Python allows to:
 
 - 📥 Import data
 - 🧹 Clean data
