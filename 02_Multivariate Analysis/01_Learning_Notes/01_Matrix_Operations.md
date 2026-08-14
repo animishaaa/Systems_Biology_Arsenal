@@ -314,54 +314,31 @@ $$
 
 ------------------------------------------------------------------------
 
-# 12. 🪞 Identity Matrix in Multiplication
+## 5.3 🪞 Identity Matrix
 
-The identity matrix does not change the matrix or vector it multiplies.
+The **identity matrix** is a special square matrix where:
 
-For example:
+- diagonal elements = `1`
+- all other elements = `0`
+
+Example:
 
 ```math
-I =
+I_3 =
 \begin{bmatrix}
-1 & 0 \\
-0 & 1
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1
 \end{bmatrix}
 ```
 
-and:
+📌 The identity matrix behaves like the number **1** in ordinary multiplication.
 
-```math
-\mathbf{x} =
-\begin{bmatrix}
-5 \\
-8
-\end{bmatrix}
-```
-
-Then:
-
-```math
-I\mathbf{x}
-=
-\begin{bmatrix}
-5 \\
-8
-\end{bmatrix}
-```
-
-Therefore:
-
-```math
-I\mathbf{x}=\mathbf{x}
-```
-
-Similarly:
+For a matrix `A`:
 
 ```math
 AI = IA = A
 ```
-
-📌 **Identity matrix = matrix version of the number 1.**
 
 ------------------------------------------------------------------------
 
@@ -805,46 +782,46 @@ The identity matrix does not change the matrix or vector it multiplies.
 
 For example:
 
-$$
+```math
 I =
 \begin{bmatrix}
 1 & 0 \\
 0 & 1
 \end{bmatrix}
-$$
+```
 
 and:
 
-$$
+```math
 \mathbf{x} =
 \begin{bmatrix}
 5 \\
 8
 \end{bmatrix}
-$$
+```
 
 Then:
 
-$$
+```math
 I\mathbf{x}
 =
 \begin{bmatrix}
 5 \\
 8
 \end{bmatrix}
-$$
+```
 
 Therefore:
 
-$$
+```math
 I\mathbf{x}=\mathbf{x}
-$$
+```
 
 Similarly:
 
-$$
+```math
 AI = IA = A
-$$
+```
 
 📌 **Identity matrix = matrix version of the number 1.**
 
