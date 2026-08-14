@@ -314,31 +314,54 @@ $$
 
 ------------------------------------------------------------------------
 
-## 5.3 🪞 Identity Matrix
+# 12. 🪞 Identity Matrix in Multiplication
 
-The **identity matrix** is a special square matrix where:
+The identity matrix does not change the matrix or vector it multiplies.
 
-- diagonal elements = `1`
-- all other elements = `0`
-
-Example:
+For example:
 
 ```math
-I_3 =
+I =
 \begin{bmatrix}
-1 & 0 & 0 \\
-0 & 1 & 0 \\
-0 & 0 & 1
+1 & 0 \\
+0 & 1
 \end{bmatrix}
 ```
 
-📌 The identity matrix behaves like the number **1** in ordinary multiplication.
+and:
 
-For a matrix `A`:
+```math
+\mathbf{x} =
+\begin{bmatrix}
+5 \\
+8
+\end{bmatrix}
+```
+
+Then:
+
+```math
+I\mathbf{x}
+=
+\begin{bmatrix}
+5 \\
+8
+\end{bmatrix}
+```
+
+Therefore:
+
+```math
+I\mathbf{x}=\mathbf{x}
+```
+
+Similarly:
 
 ```math
 AI = IA = A
 ```
+
+📌 **Identity matrix = matrix version of the number 1.**
 
 ------------------------------------------------------------------------
 
