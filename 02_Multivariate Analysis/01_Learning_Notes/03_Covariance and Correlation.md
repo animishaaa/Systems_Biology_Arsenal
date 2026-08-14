@@ -1,39 +1,58 @@
-# 📊 Covariance and Correlation  
+# 📊 Covariance and Correlation
+
 ## Complete Notes: Variance, Covariance, Correlation, Matrices & Standardization
 
 Covariance and correlation are fundamental concepts in **multivariate statistics**.
 
-They help us understand how variables behave **together** and form the mathematical foundation for techniques such as:
+They help us understand how variables behave **together** and provide the mathematical foundation for methods such as:
 
-- 📊 Principal Component Analysis (PCA)
-- 🧬 Gene expression analysis
-- 🤖 Machine learning
-- 📈 Multivariate regression
-- 🧩 Clustering
-- 🎯 Linear Discriminant Analysis (LDA)
+* 📊 Principal Component Analysis (PCA)
+* 🎯 Linear Discriminant Analysis (LDA)
+* 📈 Multivariate regression
+* 🧩 Clustering
+* 🧬 Gene expression analysis
+* 🤖 Machine learning
+
+The main progression is:
+
+```text
+Variance
+   ↓
+Covariance
+   ↓
+Correlation
+   ↓
+Covariance Matrix
+   ↓
+Correlation Matrix
+   ↓
+Standardization
+   ↓
+PCA
+```
 
 ---
 
 # 1. 🔍 Why Covariance and Correlation Matter
 
-In multivariate statistics, we usually measure several variables for the same observations.
+In multivariate statistics, we often measure several variables for the same observation.
 
 For example:
 
 | Patient | Weight | Height | Blood Pressure | Temperature |
-|---|---:|---:|---:|---:|
-| 1 | 61 | 157 | 120 | 37.0 |
-| 2 | 62 | 168 | 125 | 36.8 |
-| 3 | 73 | 170 | 130 | 37.1 |
+| ------- | -----: | -----: | -------------: | ----------: |
+| 1       |     61 |    157 |            120 |        37.0 |
+| 2       |     62 |    168 |            125 |        36.8 |
+| 3       |     73 |    170 |            130 |        37.1 |
 
 We may want to know:
 
-- 🔗 Do two variables change together?
-- 📈 Does one variable increase when another increases?
-- 📉 Does one variable decrease when another increases?
-- 🚫 Are the variables linearly unrelated?
+* 🔗 Do two variables change together?
+* 📈 Does one variable increase when another increases?
+* 📉 Does one variable decrease when another increases?
+* 🚫 Are the variables linearly unrelated?
 
-Examples include:
+Examples:
 
 ```text
 Body Weight ↔ Body Height
@@ -42,7 +61,7 @@ Blood Pressure ↔ Age
 Temperature ↔ Disease Severity
 ```
 
-Two important statistical tools help answer these questions:
+Two important statistical quantities help us answer these questions:
 
 ```text
 Covariance
@@ -56,13 +75,11 @@ Measures standardized linear association
 
 ---
 
-# 2. 📏 Variance – The Foundation
-
-Before understanding covariance, we need to understand **variance**.
+# 2. 📏 Variance – How Much Does One Variable Vary?
 
 ## What Is Variance?
 
-Variance measures how much the values of a variable **spread around their mean**.
+Variance measures how much the values of **one variable** spread around their mean.
 
 If observations are close to the mean:
 
@@ -80,17 +97,20 @@ Large spread
 Large variance
 ```
 
+> 💡 **Variance asks:**
+> How much does one variable move away from its average?
+
 ---
 
-# 3. 🧮 Mean
+# 3. 🧮 The Mean
 
-For observations:
+Suppose we observe:
 
 ```math
 x_1,x_2,\ldots,x_n
 ```
 
-the sample mean is:
+The sample mean is:
 
 ```math
 \bar{x}
@@ -101,9 +121,9 @@ the sample mean is:
 
 where:
 
-- $x_i$ = individual observation
-- $\bar{x}$ = sample mean
-- $n$ = number of observations
+* `x_i` = individual observation
+* `\bar{x}` = sample mean
+* `n` = number of observations
 
 ---
 
@@ -121,26 +141,54 @@ s_x^2
 
 where:
 
-- $x_i$ = individual observation
-- $\bar{x}$ = sample mean
-- $n$ = number of observations
-- $x_i-\bar{x}$ = deviation from the mean
-- $s_x^2$ = sample variance
+* `x_i` = individual observation
+* `\bar{x}` = sample mean
+* `n` = number of observations
+* `x_i-\bar{x}` = deviation from the mean
+* `s_x^2` = sample variance
 
-> 📌 We use $n-1$ when calculating the variance from a **sample**.
+> 📌 For sample variance, we divide by `n - 1`.
 
 ---
 
-# 5. 🧠 Understanding Variance Step by Step
+# 5. 🧠 Why Do We Square the Deviations?
 
-Variance is calculated through the following process:
+Suppose deviations from the mean are:
+
+```text
+-10, -5, 0, +5, +10
+```
+
+If we simply add them:
+
+```math
+-10-5+0+5+10=0
+```
+
+The positive and negative deviations cancel.
+
+Instead, we square them:
+
+```text
+100, 25, 0, 25, 100
+```
+
+Now all contributions are positive.
+
+Therefore variance can measure the total spread.
+
+---
+
+# 6. 🧮 Variance Step by Step
+
+The calculation follows:
 
 ```text
 Raw observations
       ↓
 Calculate mean
       ↓
-Subtract mean from each observation
+Subtract mean from every observation
       ↓
 Calculate deviations
       ↓
@@ -162,14 +210,14 @@ x_i
 \rightarrow
 (x_i-\bar{x})^2
 \rightarrow
-\sum(x_i-\bar{x})^2
+\sum_{i=1}^{n}(x_i-\bar{x})^2
 \rightarrow
-s^2
+s_x^2
 ```
 
 ---
 
-# 6. 📏 Example: Variance
+# 7. 📏 Example of Variance
 
 Suppose height measurements in decimeters are:
 
@@ -182,7 +230,7 @@ x=
 \end{bmatrix}
 ```
 
-The mean is:
+Calculate the mean:
 
 ```math
 \bar{x}
@@ -192,7 +240,7 @@ The mean is:
 17
 ```
 
-The deviations are:
+Calculate the deviations:
 
 ```math
 \begin{bmatrix}
@@ -224,7 +272,7 @@ Square the deviations:
 \end{bmatrix}
 ```
 
-Therefore:
+Now calculate the sample variance:
 
 ```math
 s^2
@@ -234,7 +282,7 @@ s^2
 1
 ```
 
-So the sample variance is:
+Therefore:
 
 ```math
 \boxed{s^2=1}
@@ -242,27 +290,25 @@ So the sample variance is:
 
 ---
 
-# 7. 📏 Standard Deviation
+# 8. 📐 Standard Deviation
 
-Variance is measured in **squared units**.
+Variance has one inconvenience.
 
-For example:
+If height is measured in centimeters:
 
 ```text
-Height measured in cm
-        ↓
-Variance measured in cm²
+Height → cm
 ```
 
-This can make variance difficult to interpret directly.
+then variance is measured in:
 
-The **standard deviation** solves this problem.
+```text
+cm²
+```
 
----
+To return to the original units, we take the square root.
 
-## Mathematical Definition
-
-Standard deviation is the square root of variance:
+The sample standard deviation is:
 
 ```math
 s
@@ -288,176 +334,264 @@ s
 
 Standard deviation:
 
-- 📏 Has the same units as the original variable
-- 📊 Describes the spread of observations
-- 🧠 Is easier to interpret than variance
+* 📏 Uses the same units as the original variable
+* 📊 Measures spread
+* 🧠 Is easier to interpret than variance
 
-For example:
-
-```text
-Height → cm
-Standard deviation → cm
-Variance → cm²
-```
-
----
-
-# 8. 🔗 Covariance – Measuring Joint Variation
-
-## What Is Covariance?
-
-Variance describes the variation of **one variable**.
-
-Covariance extends this idea to **two variables**.
+Remember:
 
 ```text
 Variance
    ↓
-How does ONE variable vary?
+Spread in squared units
 
-Covariance
+Standard Deviation
    ↓
-How do TWO variables vary together?
+Spread in original units
 ```
-
-Covariance measures whether two variables tend to move together.
 
 ---
 
-# 9. 🧮 Sample Covariance Formula
+# 9. 🔗 Covariance – Do Two Variables Move Together?
 
-For two variables $X$ and $Y$:
+Variance asks:
+
+> How does **X** vary?
+
+Covariance asks:
+
+> When **X changes**, what tends to happen to **Y**?
+
+This is the key transition from **univariate** to **bivariate/multivariate thinking**.
+
+---
+
+# 10. ➕ Positive Covariance
+
+Suppose we observe:
+
+| Person | Height | Weight |
+| ------ | -----: | -----: |
+| A      |    150 |     50 |
+| B      |    160 |     60 |
+| C      |    170 |     70 |
+| D      |    180 |     80 |
+
+As height increases:
+
+```text
+Height ↑
+   ↓
+Weight ↑
+```
+
+Therefore, the two variables have **positive covariance**.
+
+```math
+\mathrm{Cov}(X,Y)>0
+```
+
+---
+
+# 11. ➖ Negative Covariance
+
+Suppose:
+
+|  X |   Y |
+| -: | --: |
+|  1 | 100 |
+|  2 |  80 |
+|  3 |  60 |
+|  4 |  40 |
+
+As `X` increases:
+
+```text
+X ↑
+ ↓
+Y ↓
+```
+
+Therefore:
+
+```math
+\mathrm{Cov}(X,Y)<0
+```
+
+This is **negative covariance**.
+
+---
+
+# 12. 🧮 Sample Covariance Formula
+
+For two variables `X` and `Y`:
 
 ```math
 s_{xy}
 =
-\operatorname{Cov}(X,Y)
+\mathrm{Cov}(X,Y)
 =
 \frac{1}{n-1}
 \sum_{i=1}^{n}
-(x_i-\bar{x})
-(y_i-\bar{y})
+(x_i-\bar{x})(y_i-\bar{y})
 ```
 
 where:
 
-- $x_i$ = observation from variable $X$
-- $y_i$ = observation from variable $Y$
-- $\bar{x}$ = mean of $X$
-- $\bar{y}$ = mean of $Y$
-- $n$ = number of paired observations
+* `x_i` = observation from variable X
+* `y_i` = observation from variable Y
+* `\bar{x}` = mean of X
+* `\bar{y}` = mean of Y
+* `n` = number of paired observations
 
 ---
 
-# 10. 🧠 Understanding Covariance Step by Step
+# 13. 🧠 The Most Important Part of Covariance
 
-The calculation follows:
+Focus on:
 
-```text
-X values                   Y values
-   ↓                          ↓
-Mean of X                  Mean of Y
-   ↓                          ↓
-xᵢ - x̄                     yᵢ - ȳ
-        ↘                  ↙
-          Multiply deviations
-                  ↓
-       (xᵢ-x̄)(yᵢ-ȳ)
-                  ↓
-               Sum
-                  ↓
-            Divide by n-1
-                  ↓
-             Covariance
+```math
+(x_i-\bar{x})(y_i-\bar{y})
 ```
 
+This compares whether X and Y are above or below their respective means.
+
 ---
 
-# 11. ➕ Positive Covariance
+## Case 1: Both Above Their Means
 
-Positive covariance occurs when the variables tend to move in the **same direction**.
-
-```text
-X increases
-    ↓
-Y tends to increase
+```math
+(x_i-\bar{x})>0
 ```
 
 and:
 
-```text
-X decreases
-    ↓
-Y tends to decrease
+```math
+(y_i-\bar{y})>0
 ```
 
-Example:
-
-```text
-Height ↑
-Weight ↑
-```
-
-This may produce:
+Therefore:
 
 ```math
-\operatorname{Cov}(X,Y)>0
+(+)(+)=+
 ```
+
+✅ Positive contribution to covariance.
 
 ---
 
-# 12. ➖ Negative Covariance
-
-Negative covariance occurs when the variables tend to move in **opposite directions**.
-
-```text
-X increases
-    ↓
-Y tends to decrease
-```
-
-Example:
-
-```text
-X ↑
-Y ↓
-```
-
-This produces:
+## Case 2: Both Below Their Means
 
 ```math
-\operatorname{Cov}(X,Y)<0
+(x_i-\bar{x})<0
 ```
+
+and:
+
+```math
+(y_i-\bar{y})<0
+```
+
+Therefore:
+
+```math
+(-)(-)=+
+```
+
+✅ Also a positive contribution.
 
 ---
 
-# 13. 0️⃣ Zero Covariance
+## Case 3: X Above, Y Below
+
+```math
+(x_i-\bar{x})>0
+```
+
+but:
+
+```math
+(y_i-\bar{y})<0
+```
+
+Therefore:
+
+```math
+(+)(-) = -
+```
+
+❌ Negative contribution.
+
+---
+
+## Case 4: X Below, Y Above
+
+```math
+(x_i-\bar{x})<0
+```
+
+but:
+
+```math
+(y_i-\bar{y})>0
+```
+
+Therefore:
+
+```math
+(-)(+) = -
+```
+
+❌ Negative contribution.
+
+---
+
+# 14. 📋 The Four Covariance Possibilities
+
+| X relative to mean | Y relative to mean | Product |
+| ------------------ | ------------------ | ------: |
+| Above              | Above              |       + |
+| Below              | Below              |       + |
+| Above              | Below              |       − |
+| Below              | Above              |       − |
+
+Therefore:
+
+> ✅ **Same-side deviations → positive covariance**
+
+> ❌ **Opposite-side deviations → negative covariance**
+
+---
+
+# 15. 0️⃣ Zero Covariance
 
 If:
 
 ```math
-\operatorname{Cov}(X,Y)\approx0
+\mathrm{Cov}(X,Y)\approx0
 ```
 
-there is little or no **linear association** between the variables.
+there is little or no **linear co-movement** between the two variables.
 
-> ⚠️ Zero covariance does **not necessarily mean the variables are completely unrelated**. A strong nonlinear relationship can exist even when covariance is zero.
+However:
 
----
+> ⚠️ Zero covariance does **not necessarily mean no relationship**.
 
-# 14. 📊 Interpretation of Covariance
-
-| Covariance | Interpretation |
-|---|---|
-| $>0$ | 📈 Variables tend to move together |
-| $<0$ | 📉 Variables tend to move oppositely |
-| $\approx0$ | ➖ Little or no linear association |
+A nonlinear relationship may exist even if covariance is zero.
 
 ---
 
-# 15. ⚠️ Limitation of Covariance
+# 16. 📊 Covariance Sign Interpretation
 
-The magnitude of covariance depends on the **units and scale** of the variables.
+| Covariance | Meaning                                          |
+| ---------- | ------------------------------------------------ |
+| `> 0`      | 📈 Variables tend to move together               |
+| `< 0`      | 📉 Variables tend to move in opposite directions |
+| `≈ 0`      | ➖ Little or no linear co-movement                |
+
+---
+
+# 17. ⚠️ Why Covariance Magnitude Is Hard to Interpret
 
 Suppose:
 
@@ -472,75 +606,81 @@ Then covariance has units:
 kg × cm
 ```
 
-If height is changed from centimeters to meters, the numerical covariance changes.
+Suppose:
 
-Therefore:
+```math
+\mathrm{Cov}(X,Y)=80
+```
 
-> 📌 The **sign** of covariance is easy to interpret, but its magnitude is difficult to compare across differently scaled variables.
+Is `80` strong?
+
+We cannot tell immediately.
+
+The value depends heavily on:
+
+* Measurement units
+* Variable scales
+
+If height changes from centimeters to meters, covariance changes numerically even though the biological relationship is unchanged.
 
 This motivates **correlation**.
 
 ---
 
-# 16. 🔗 Pearson Correlation Coefficient
+# 18. 🔗 Correlation – Standardized Covariance
 
-## What Is Correlation?
+Pearson correlation standardizes covariance.
 
-Correlation is essentially **standardized covariance**.
-
-The Pearson correlation coefficient is:
+The formula is:
 
 ```math
 r_{xy}
 =
-\frac{
-\operatorname{Cov}(X,Y)
-}{
-s_xs_y
-}
+\frac{s_{xy}}{s_xs_y}
 ```
 
-or:
+Equivalently:
 
 ```math
 r_{xy}
 =
-\frac{
-s_{xy}
-}{
-s_xs_y
-}
+\frac{\mathrm{Cov}(X,Y)}
+{s_xs_y}
 ```
 
 where:
 
-- $s_{xy}$ = covariance between $X$ and $Y$
-- $s_x$ = standard deviation of $X$
-- $s_y$ = standard deviation of $Y$
+* `s_{xy}` = covariance between X and Y
+* `s_x` = standard deviation of X
+* `s_y` = standard deviation of Y
 
 ---
 
-# 17. 🎯 Range of Pearson Correlation
+# 19. 🎯 Range of Correlation
 
-Correlation is bounded between:
+Pearson correlation always satisfies:
 
 ```math
 -1\leq r\leq1
 ```
 
-Therefore:
+This gives correlation a very useful standardized scale.
 
-| $r$ | Meaning |
-|---:|---|
-| $+1$ | 📈 Perfect positive linear relationship |
-| $0$ | ➖ No linear relationship |
-| $-1$ | 📉 Perfect negative linear relationship |
+| Correlation | Interpretation                        |
+| ----------: | ------------------------------------- |
+|        `+1` | Perfect positive linear relationship  |
+|      `+0.8` | Strong positive linear relationship   |
+|      `+0.4` | Moderate positive linear relationship |
+|         `0` | No linear relationship                |
+|      `-0.4` | Moderate negative linear relationship |
+|      `-0.8` | Strong negative linear relationship   |
+|        `-1` | Perfect negative linear relationship  |
+
+> 📌 Exact labels such as *weak*, *moderate*, and *strong* depend on the scientific context.
 
 ---
 
-# 18. 🧠 Correlation Scale
-
-A useful conceptual scale is:
+# 20. 📈 Correlation Scale
 
 ```text
 -1                  0                  +1
@@ -549,69 +689,99 @@ Strong negative     No linear          Strong positive
 relationship        relationship       relationship
 ```
 
-Values closer to either:
-
-```math
--1
-```
-
-or:
+Values close to:
 
 ```math
 +1
 ```
 
-indicate a stronger **linear association**.
+indicate strong positive linear association.
 
-Values closer to:
+Values close to:
+
+```math
+-1
+```
+
+indicate strong negative linear association.
+
+Values close to:
 
 ```math
 0
 ```
 
-indicate a weaker linear association.
-
-> 📌 The exact labels "weak", "moderate", and "strong" depend on the scientific field and context.
+indicate weak linear association.
 
 ---
 
-# 19. 🆚 Covariance vs Correlation
+# 21. 🆚 Covariance vs Correlation
 
-| Property | Covariance | Correlation |
-|---|---|---|
-| Measures joint variation | ✅ | ✅ |
-| Shows direction | ✅ | ✅ |
-| Standardized | ❌ | ✅ |
-| Fixed range | ❌ | $[-1,1]$ |
-| Depends on units | ✅ | ❌ |
-| Easy magnitude interpretation | ❌ | ✅ |
-| Scale-independent | ❌ | ✅ |
+### Covariance asks:
+
+> In which direction do X and Y move together?
+
+### Correlation asks:
+
+> In which direction, and how strongly, are X and Y linearly associated after removing scale?
+
+Conceptually:
+
+```text
+Covariance
+    ↓
+Divide by SD(X) × SD(Y)
+    ↓
+Correlation
+```
+
+Mathematically:
+
+```math
+r_{xy}
+=
+\frac{s_{xy}}{s_xs_y}
+```
 
 ---
 
-# 20. ⚖️ Worked Example: Body Weight & Height
+# 22. 📋 Covariance vs Correlation Table
+
+| Property                      | Covariance | Correlation |
+| ----------------------------- | ---------- | ----------- |
+| Measures joint variation      | ✅          | ✅           |
+| Shows direction               | ✅          | ✅           |
+| Standardized                  | ❌          | ✅           |
+| Fixed range                   | ❌          | `[-1,1]`    |
+| Depends on units              | ✅          | ❌           |
+| Scale-independent             | ❌          | ✅           |
+| Easy magnitude interpretation | ❌          | ✅           |
+
+---
+
+# 23. ⚖️ Worked Example: Weight and Height
 
 Suppose we have:
 
 | Person | Weight (kg) | Height (cm) |
-|---:|---:|---:|
-| 1 | 61 | 157 |
-| 2 | 62 | 168 |
-| 3 | 73 | 170 |
-| 4 | 74 | 181 |
-| 5 | 82 | 191 |
-| 6 | 86 | 185 |
+| -----: | ----------: | ----------: |
+|      1 |          61 |         157 |
+|      2 |          62 |         168 |
+|      3 |          73 |         170 |
+|      4 |          74 |         181 |
+|      5 |          82 |         191 |
+|      6 |          86 |         185 |
 
 Represent the variables as:
 
 ```math
 X=
 \begin{bmatrix}
-61\\
-62\\
-73\\
-74\\
-82\\
+61 \\
+62 \\
+73 \\
+74 \\
+82 \\
 86
 \end{bmatrix}
 ```
@@ -621,94 +791,82 @@ and:
 ```math
 Y=
 \begin{bmatrix}
-157\\
-168\\
-170\\
-181\\
-191\\
+157 \\
+168 \\
+170 \\
+181 \\
+191 \\
 185
 \end{bmatrix}
 ```
 
 ---
 
-# 21. 🧮 Step 1: Calculate the Means
-
-For weight:
+# 24. 🧮 Step 1: Calculate the Mean Weight
 
 ```math
 \bar{x}
 =
-\frac{
-61+62+73+74+82+86
-}{6}
+\frac{61+62+73+74+82+86}{6}
 ```
+
+Therefore:
 
 ```math
-\bar{x}
-=
-73
+\bar{x}=73
 ```
-
-For height:
-
-```math
-\bar{y}
-=
-\frac{
-157+168+170+181+191+185
-}{6}
-```
-
-```math
-\bar{y}
-=
-175.33
-```
-
-approximately.
 
 ---
 
-# 22. 🧮 Step 2: Calculate Deviations
-
-For each observation calculate:
+# 25. 🧮 Step 2: Calculate the Mean Height
 
 ```math
-x_i-\bar{x}
+\bar{y}
+=
+\frac{157+168+170+181+191+185}{6}
+```
+
+Therefore:
+
+```math
+\bar{y}\approx175.33
+```
+
+---
+
+# 26. 🧮 Step 3: Calculate Deviations
+
+For the first person:
+
+```math
+x_1-\bar{x}
+=
+61-73
+=
+-12
 ```
 
 and:
 
 ```math
-y_i-\bar{y}
+y_1-\bar{y}
+=
+157-175.33
+\approx
+-18.33
 ```
 
-For example, for the first observation:
-
-```math
-61-73=-12
-```
-
-and:
-
-```math
-157-175.33=-18.33
-```
-
-Both deviations are negative.
-
-Therefore their product is positive:
+Multiply the deviations:
 
 ```math
 (-12)(-18.33)>0
 ```
 
-This contributes to a **positive covariance**.
+Because both variables are below their means, this observation contributes positively to covariance.
 
 ---
 
-# 23. 🧮 Step 3: Calculate Covariance
+# 27. 🧮 Step 4: Calculate Sample Covariance
 
 Use:
 
@@ -726,16 +884,14 @@ n-1
 For these data:
 
 ```math
-s_{xy}
-\approx
-132.4
+s_{xy}\approx132.4
 ```
 
 Therefore:
 
 ```math
 \boxed{
-\operatorname{Cov}(X,Y)\approx132.4
+\mathrm{Cov}(X,Y)\approx132.4
 }
 ```
 
@@ -743,9 +899,9 @@ The positive value indicates that weight and height tend to increase together.
 
 ---
 
-# 24. 📐 Step 4: Calculate Standard Deviations
+# 28. 📐 Step 5: Calculate Standard Deviations
 
-The sample standard deviations are approximately:
+The approximate sample standard deviations are:
 
 ```math
 s_x\approx10.04
@@ -759,7 +915,7 @@ s_y\approx12.47
 
 ---
 
-# 25. 🔗 Step 5: Calculate Correlation
+# 29. 🔗 Step 6: Calculate Pearson Correlation
 
 Use:
 
@@ -769,41 +925,38 @@ r
 \frac{s_{xy}}{s_xs_y}
 ```
 
-Therefore:
+Substitute:
 
 ```math
 r
 =
-\frac{
-132.4
-}{
-(10.04)(12.47)
-}
+\frac{132.4}
+{(10.04)(12.47)}
 ```
 
-which gives approximately:
+Therefore:
 
 ```math
 \boxed{r\approx0.94}
 ```
 
-📌 This indicates a **strong positive linear relationship** between weight and height in this small example dataset.
+📌 This indicates a **strong positive linear relationship** in this small sample.
 
 ---
 
-# 26. 📈 Visual Interpretation with Scatter Plots
+# 30. 📈 Visual Interpretation with Scatter Plots
 
-A scatter plot is one of the best ways to understand correlation.
-
-Each observation is represented by:
+A scatter plot represents every observation as:
 
 ```math
 (x_i,y_i)
 ```
 
+The shape of the point cloud helps us interpret correlation.
+
 ---
 
-## 🟢 Perfect Positive Correlation
+# 31. 🟢 Perfect Positive Correlation
 
 ```text
 Y
@@ -815,7 +968,7 @@ Y
 └──────────────── X
 ```
 
-The observations lie exactly on an increasing straight line.
+The points lie exactly on an increasing straight line.
 
 ```math
 r=1
@@ -823,7 +976,7 @@ r=1
 
 ---
 
-# 27. 📈 Strong Positive Correlation
+# 32. 📈 Strong Positive Correlation
 
 ```text
 Y
@@ -835,7 +988,7 @@ Y
 └──────────────── X
 ```
 
-The observations approximately follow an increasing line.
+The points approximately follow an increasing straight line.
 
 For example:
 
@@ -845,7 +998,7 @@ r\approx0.79
 
 ---
 
-# 28. 🔹 Weak Positive Correlation
+# 33. 🔹 Weak Positive Correlation
 
 ```text
 Y
@@ -857,7 +1010,7 @@ Y
 └──────────────── X
 ```
 
-A weak upward tendency may exist.
+A weak upward trend may exist.
 
 For example:
 
@@ -867,7 +1020,7 @@ r\approx0.38
 
 ---
 
-# 29. 0️⃣ No Linear Correlation
+# 34. 0️⃣ No Linear Correlation
 
 ```text
 Y
@@ -887,7 +1040,7 @@ r\approx0
 
 ---
 
-# 30. 📉 Negative Correlation
+# 35. 📉 Negative Correlation
 
 ```text
 Y
@@ -899,7 +1052,7 @@ Y
 └──────────────── X
 ```
 
-As $X$ increases, $Y$ decreases.
+As X increases, Y decreases.
 
 Therefore:
 
@@ -907,7 +1060,7 @@ Therefore:
 r<0
 ```
 
-A perfect negative linear relationship has:
+For a perfect negative linear relationship:
 
 ```math
 r=-1
@@ -915,11 +1068,9 @@ r=-1
 
 ---
 
-# 31. ⚠️ Correlation Measures Linear Association
+# 36. ⚠️ Pearson Correlation Measures Linear Association
 
-Pearson correlation measures **linear** association.
-
-For example, imagine a perfect U-shaped relationship:
+Consider a U-shaped relationship:
 
 ```text
 Y
@@ -930,25 +1081,79 @@ Y
 └──────────────── X
 ```
 
-There may be a very strong relationship between $X$ and $Y$, but Pearson correlation could still be close to:
+X and Y clearly have a relationship.
+
+However, Pearson correlation may still be close to:
 
 ```math
 r=0
 ```
 
+because there is little overall **linear** association.
+
 Therefore:
 
-> 📌 **Correlation near zero does not automatically mean "no relationship." It means little or no linear relationship.**
+> 📌 `r ≈ 0` means little or no **linear relationship**, not necessarily no relationship at all.
 
 ---
 
-# 32. 📊 Covariance Matrix
+# 37. ⚠️ Correlation Does Not Imply Causation
 
-When we have more than two variables, calculating every covariance separately becomes inconvenient.
+Suppose:
 
-Instead, we construct a **covariance matrix**.
+```math
+r_{\mathrm{ice\ cream,\ sunburn}}>0
+```
 
-Suppose we have three variables:
+Does eating ice cream cause sunburn?
+
+No.
+
+A third variable may affect both.
+
+For example:
+
+```text
+Temperature ↑
+      │
+      ├────────→ Ice cream sales ↑
+      │
+      └────────→ Sun exposure ↑
+```
+
+Therefore:
+
+> 📌 **Correlation measures association. It does not prove causation.**
+
+---
+
+# 38. ⚠️ Correlation Can Be Influenced by Outliers
+
+Suppose most observations form one pattern:
+
+```text
+● ● ● ● ●
+```
+
+but there is one extreme observation:
+
+```text
+                     ●
+```
+
+That single observation may strongly change Pearson correlation.
+
+Therefore:
+
+> 📌 Always inspect the scatter plot before interpreting the correlation coefficient.
+
+---
+
+# 39. 📊 Covariance Matrix
+
+With many variables, calculating every pairwise covariance separately becomes inconvenient.
+
+Suppose we have:
 
 ```math
 X_1,\ X_2,\ X_3
@@ -957,82 +1162,110 @@ X_1,\ X_2,\ X_3
 The covariance matrix is:
 
 ```math
-S =
+S=
 \begin{bmatrix}
-\operatorname{Var}(X_1)
-&
-\operatorname{Cov}(X_1,X_2)
-&
-\operatorname{Cov}(X_1,X_3)
+\mathrm{Var}(X_1) &
+\mathrm{Cov}(X_1,X_2) &
+\mathrm{Cov}(X_1,X_3)
 \\
-\operatorname{Cov}(X_2,X_1)
-&
-\operatorname{Var}(X_2)
-&
-\operatorname{Cov}(X_2,X_3)
+\mathrm{Cov}(X_2,X_1) &
+\mathrm{Var}(X_2) &
+\mathrm{Cov}(X_2,X_3)
 \\
-\operatorname{Cov}(X_3,X_1)
-&
-\operatorname{Cov}(X_3,X_2)
-&
-\operatorname{Var}(X_3)
+\mathrm{Cov}(X_3,X_1) &
+\mathrm{Cov}(X_3,X_2) &
+\mathrm{Var}(X_3)
 \end{bmatrix}
 ```
 
 ---
 
-# 33. 🔍 Structure of a Covariance Matrix
+# 40. 🔍 Structure of a Covariance Matrix
 
-The diagonal contains **variances**:
+The diagonal contains variances:
 
 ```math
 S_{ii}
 =
-\operatorname{Var}(X_i)
+\mathrm{Var}(X_i)
 ```
 
-The off-diagonal elements contain **covariances**:
+The off-diagonal elements contain covariances:
 
 ```math
 S_{ij}
 =
-\operatorname{Cov}(X_i,X_j)
+\mathrm{Cov}(X_i,X_j)
 ```
 
-Therefore:
+Conceptually:
 
 ```text
-               Variable 1    Variable 2    Variable 3
+               X₁              X₂              X₃
 
-Variable 1     Variance       Covariance     Covariance
+X₁          Variance       Covariance      Covariance
 
-Variable 2     Covariance     Variance       Covariance
+X₂         Covariance       Variance       Covariance
 
-Variable 3     Covariance     Covariance     Variance
+X₃         Covariance      Covariance       Variance
 ```
 
 ---
 
-# 34. 🪞 Covariance Matrix Is Symmetric
+# 41. 💡 Variance Is Covariance with Itself
+
+A very important identity is:
+
+```math
+\mathrm{Cov}(X,X)
+=
+\mathrm{Var}(X)
+```
+
+Therefore:
+
+> 🧠 **Variance is simply the covariance of a variable with itself.**
+
+This explains why variances appear on the diagonal of a covariance matrix.
+
+---
+
+# 42. 🪞 Why Is the Covariance Matrix Symmetric?
 
 Covariance satisfies:
 
 ```math
-\operatorname{Cov}(X,Y)
+\mathrm{Cov}(X,Y)
 =
-\operatorname{Cov}(Y,X)
+\mathrm{Cov}(Y,X)
 ```
 
 Therefore:
 
 ```math
-S=S^T
+S_{12}=S_{21}
 ```
 
-For example:
+and in general:
 
 ```math
-S =
+S_{ij}=S_{ji}
+```
+
+Thus:
+
+```math
+\boxed{S=S^T}
+```
+
+So every covariance matrix is symmetric.
+
+---
+
+# 43. 📊 Example Covariance Matrix
+
+```math
+S=
 \begin{bmatrix}
 4 & 2 & -1 \\
 2 & 9 & 3 \\
@@ -1040,45 +1273,48 @@ S =
 \end{bmatrix}
 ```
 
+The diagonal values:
+
+```math
+4,\ 9,\ 16
+```
+
+are variances.
+
+The off-diagonal values:
+
+```math
+2,\ -1,\ 3
+```
+
+are covariances.
+
 Notice:
 
 ```math
 S_{12}=S_{21}=2
 ```
 
-and:
-
 ```math
 S_{13}=S_{31}=-1
 ```
 
-Therefore, the matrix is symmetric.
+```math
+S_{23}=S_{32}=3
+```
+
+Therefore the matrix is symmetric.
 
 ---
 
-# 35. 🧠 Covariance Matrix – Key Properties
+# 44. 🔗 Correlation Matrix
 
-A covariance matrix has several important properties:
-
-- 📐 It is square
-- 🪞 It is symmetric
-- 📊 Diagonal entries are variances
-- 🔗 Off-diagonal entries are covariances
-- ➕ Diagonal entries are non-negative
-- ⭐ Its eigenvalues are non-negative, apart from tiny numerical rounding errors
-
-These properties become extremely important in **PCA**.
-
----
-
-# 36. 🔗 Correlation Matrix
-
-A correlation matrix has the same structure as a covariance matrix, but contains **correlations instead of covariances**.
+A correlation matrix has the same structure as a covariance matrix, but contains correlations instead of covariances.
 
 For three variables:
 
 ```math
-R =
+R=
 \begin{bmatrix}
 1 & r_{12} & r_{13} \\
 r_{21} & 1 & r_{23} \\
@@ -1091,61 +1327,61 @@ where:
 ```math
 r_{ij}
 =
-\operatorname{Corr}(X_i,X_j)
+\mathrm{Corr}(X_i,X_j)
 ```
 
 ---
 
-# 37. 1️⃣ Why Is the Diagonal Always 1?
+# 45. 1️⃣ Why Is the Diagonal of a Correlation Matrix Equal to 1?
 
 The correlation of a variable with itself is:
 
 ```math
-\operatorname{Corr}(X,X)
+\mathrm{Corr}(X,X)
 =
 \frac{
-\operatorname{Cov}(X,X)
+\mathrm{Cov}(X,X)
 }{
 s_xs_x
 }
 ```
 
-But:
+Since:
 
 ```math
-\operatorname{Cov}(X,X)
+\mathrm{Cov}(X,X)
 =
-\operatorname{Var}(X)
+\mathrm{Var}(X)
 =
 s_x^2
 ```
 
-Therefore:
+we obtain:
 
 ```math
-\operatorname{Corr}(X,X)
+\mathrm{Corr}(X,X)
 =
 \frac{s_x^2}{s_x^2}
 =
 1
 ```
 
-So:
+Therefore:
 
 ```math
-r_{ii}=1
+\boxed{r_{ii}=1}
 ```
 
 ---
 
-# 38. 🪞 Correlation Matrix Is Symmetric
+# 46. 🪞 Correlation Matrix Is Symmetric
 
 Because:
 
 ```math
-\operatorname{Corr}(X,Y)
+\mathrm{Corr}(X,Y)
 =
-\operatorname{Corr}(Y,X)
+\mathrm{Corr}(Y,X)
 ```
 
 we have:
@@ -1154,7 +1390,7 @@ we have:
 R=R^T
 ```
 
-Therefore:
+and:
 
 ```math
 r_{ij}=r_{ji}
@@ -1162,97 +1398,173 @@ r_{ij}=r_{ji}
 
 ---
 
-# 39. 🆚 Covariance Matrix vs Correlation Matrix
+# 47. 📊 Example Correlation Matrix
 
 Suppose:
 
 ```math
-S =
+R=
+\begin{bmatrix}
+1 & 0.40 & 0.20 \\
+0.40 & 1 & 0.04 \\
+0.20 & 0.04 & 1
+\end{bmatrix}
+```
+
+The diagonal contains:
+
+```text
+1, 1, 1
+```
+
+because each variable is perfectly correlated with itself.
+
+The off-diagonal values represent relationships between different variables.
+
+---
+
+# 48. 🆚 Covariance Matrix vs Correlation Matrix
+
+Example covariance matrix:
+
+```math
+S=
 \begin{bmatrix}
 100 & 20 \\
 20 & 25
 \end{bmatrix}
 ```
 
-The diagonal contains variances.
-
 A corresponding correlation matrix might be:
 
 ```math
-R =
+R=
 \begin{bmatrix}
 1 & 0.40 \\
 0.40 & 1
 \end{bmatrix}
 ```
 
-The major difference is:
+The major distinction is:
 
 ```text
 Covariance Matrix
-      ↓
+        ↓
 Depends on measurement scale
 
 Correlation Matrix
-      ↓
-Standardized and scale-independent
+        ↓
+Standardized
+        ↓
+Scale-independent
 ```
 
 ---
 
-# 40. 📏 Standardization of Data
+# 49. ⚖️ Standardization of Data
 
-## Why Standardize?
-
-Multivariate datasets often contain variables measured in different units.
+Multivariate datasets often contain variables measured in very different units.
 
 For example:
 
-| Variable | Unit |
-|---|---|
-| Weight | kg |
-| Height | cm |
-| Blood pressure | mmHg |
-| Temperature | °C |
-| Gene expression | arbitrary units |
+| Variable        | Unit   |
+| --------------- | ------ |
+| Weight          | kg     |
+| Height          | cm     |
+| Blood pressure  | mmHg   |
+| Temperature     | °C     |
+| Gene expression | counts |
 
-A variable with a large numerical scale can dominate calculations based on raw variance.
+Their numerical scales may be very different.
 
-Standardization removes these scale differences.
+For example:
+
+```text
+Weight          = 70
+Height          = 180
+Temperature     = 37
+Gene expression = 24,000
+```
+
+These numbers are not directly comparable.
+
+Standardization removes the effect of scale.
 
 ---
 
-# 41. 🧮 Standardization Formula
+# 50. 📐 Z-Score Standardization
 
-The standardized value, or **z-score**, is:
+The standardized value is:
 
 ```math
 z_i
 =
-\frac{
-x_i-\bar{x}
-}{
-s_x
-}
+\frac{x_i-\bar{x}}{s_x}
 ```
 
 where:
 
-- $x_i$ = original observation
-- $\bar{x}$ = mean
-- $s_x$ = standard deviation
-- $z_i$ = standardized observation
+* `x_i` = original value
+* `\bar{x}` = mean
+* `s_x` = standard deviation
+* `z_i` = standardized value
+
+A z-score tells us:
+
+> How many standard deviations is this observation away from the mean?
 
 ---
 
-# 42. 🧠 Standardization Step by Step
+# 51. 🧠 Example of a Z-Score
 
-The process is:
+Suppose:
+
+```math
+\bar{x}=70
+```
+
+and:
+
+```math
+s_x=10
+```
+
+For someone weighing 90 kg:
+
+```math
+z
+=
+\frac{90-70}{10}
+=
+2
+```
+
+Therefore:
+
+> The observation is **2 standard deviations above the mean**.
+
+For someone weighing 60 kg:
+
+```math
+z
+=
+\frac{60-70}{10}
+=
+-1
+```
+
+Therefore:
+
+> The observation is **1 standard deviation below the mean**.
+
+---
+
+# 52. 🔄 Standardization Step by Step
 
 ```text
 Original data
       ↓
-Subtract mean
+Subtract the mean
       ↓
 Centered data
       ↓
@@ -1273,15 +1585,15 @@ x_i-\bar{x}
 
 ---
 
-# 43. 1️⃣ Stage 1: Original Data
+# 53. 1️⃣ Stage 1: Original Data
 
 Suppose:
 
 ```math
 X=
 \begin{bmatrix}
-10\\
-20\\
+10 \\
+20 \\
 30
 \end{bmatrix}
 ```
@@ -1294,7 +1606,7 @@ The mean is:
 
 ---
 
-# 44. 2️⃣ Stage 2: Center the Data
+# 54. 2️⃣ Stage 2: Center the Data
 
 Subtract the mean:
 
@@ -1302,8 +1614,8 @@ Subtract the mean:
 X-\bar{x}
 =
 \begin{bmatrix}
-10-20\\
-20-20\\
+10-20 \\
+20-20 \\
 30-20
 \end{bmatrix}
 ```
@@ -1311,11 +1623,11 @@ X-\bar{x}
 Therefore:
 
 ```math
-X_{\text{centered}}
+X_{\mathrm{centered}}
 =
 \begin{bmatrix}
--10\\
-0\\
+-10 \\
+0 \\
 10
 \end{bmatrix}
 ```
@@ -1323,14 +1635,14 @@ X_{\text{centered}}
 The centered data have:
 
 ```math
-\text{Mean}=0
+\boxed{\mathrm{Mean}=0}
 ```
 
 ---
 
-# 45. 3️⃣ Stage 3: Divide by Standard Deviation
+# 55. 3️⃣ Stage 3: Divide by Standard Deviation
 
-The sample standard deviation is:
+For these data:
 
 ```math
 s=10
@@ -1341,11 +1653,7 @@ Therefore:
 ```math
 Z
 =
-\frac{
-X-\bar{x}
-}{
-s
-}
+\frac{X-\bar{x}}{s}
 ```
 
 giving:
@@ -1353,8 +1661,8 @@ giving:
 ```math
 Z=
 \begin{bmatrix}
--1\\
-0\\
+-1 \\
+0 \\
 1
 \end{bmatrix}
 ```
@@ -1362,20 +1670,43 @@ Z=
 After standardization:
 
 ```math
-\boxed{\text{Mean}=0}
+\boxed{\mathrm{Mean}=0}
 ```
 
 and:
 
 ```math
-\boxed{\text{SD}=1}
+\boxed{\mathrm{SD}=1}
 ```
 
 ---
 
-# 46. 🔑 Standardization – Key Result
+# 56. 🔑 What Standardization Does
 
-For standardized variables:
+Before standardization:
+
+```text
+Height
+Mean = 175 cm
+SD   = 12 cm
+```
+
+After standardization:
+
+```text
+Mean = 0
+SD   = 1
+```
+
+Now kilograms, centimeters, blood pressure, gene-expression counts, etc. are expressed in the same conceptual unit:
+
+> **Number of standard deviations from the mean**
+
+---
+
+# 57. ⭐ Why Covariance of Standardized Variables Equals Correlation
+
+Suppose:
 
 ```math
 Z_X
@@ -1391,25 +1722,25 @@ Z_Y
 \frac{Y-\bar{Y}}{s_Y}
 ```
 
-their covariance is:
+The covariance between the standardized variables becomes:
 
 ```math
-\operatorname{Cov}(Z_X,Z_Y)
+\mathrm{Cov}(Z_X,Z_Y)
 =
 \frac{
-\operatorname{Cov}(X,Y)
+\mathrm{Cov}(X,Y)
 }{
 s_Xs_Y
 }
 ```
 
-But this is exactly the correlation:
+But Pearson correlation is:
 
 ```math
-\operatorname{Corr}(X,Y)
+\mathrm{Corr}(X,Y)
 =
 \frac{
-\operatorname{Cov}(X,Y)
+\mathrm{Cov}(X,Y)
 }{
 s_Xs_Y
 }
@@ -1419,17 +1750,17 @@ Therefore:
 
 ```math
 \boxed{
-\operatorname{Cov}(Z_X,Z_Y)
+\mathrm{Cov}(Z_X,Z_Y)
 =
-\operatorname{Corr}(X,Y)
+\mathrm{Corr}(X,Y)
 }
 ```
 
 ---
 
-# 47. ⭐ Covariance Matrix of Standardized Data
+# 58. 📊 Key Matrix Result
 
-This gives one of the most important results in multivariate statistics:
+For an entire standardized dataset:
 
 ```math
 \boxed{
@@ -1444,7 +1775,7 @@ Conceptually:
 ```text
 Original Data
       ↓
-Standardize each variable
+Standardize every variable
       ↓
 Mean = 0
 SD = 1
@@ -1454,21 +1785,21 @@ Calculate covariance matrix
 Correlation Matrix
 ```
 
-This result is extremely important for **PCA**.
+This relationship is extremely important for **PCA**.
 
 ---
 
-# 48. 📊 Reading a Correlation Matrix
+# 59. 📊 Reading a Correlation Matrix
 
 Consider:
 
-| | Weight | Height | DBP | SBP | Temp |
-|---|---:|---:|---:|---:|---:|
-| **Weight** | 1 | 0.40* | 0.20 | 0.22 | -0.03 |
-| **Height** | 0.40* | 1 | 0.04 | -0.09 | -0.01 |
-| **DBP** | 0.20 | 0.04 | 1 | 0.79* | 0.04 |
-| **SBP** | 0.22 | -0.09 | 0.79* | 1 | -0.09 |
-| **Temp** | -0.03 | -0.01 | 0.04 | -0.09 | 1 |
+|            | Weight | Height |   DBP |   SBP |  Temp |
+| ---------- | -----: | -----: | ----: | ----: | ----: |
+| **Weight** |      1 |  0.40* |  0.20 |  0.22 | -0.03 |
+| **Height** |  0.40* |      1 |  0.04 | -0.09 | -0.01 |
+| **DBP**    |   0.20 |   0.04 |     1 | 0.79* |  0.04 |
+| **SBP**    |   0.22 |  -0.09 | 0.79* |     1 | -0.09 |
+| **Temp**   |  -0.03 |  -0.01 |  0.04 | -0.09 |     1 |
 
 where:
 
@@ -1479,229 +1810,145 @@ SBP = Systolic Blood Pressure
 
 ---
 
-# 49. 🔍 Interpreting Weight and Height
+# 60. 🔍 Weight and Height
 
 From the matrix:
 
 ```math
-r_{\text{Weight,Height}}
+r_{\mathrm{Weight,Height}}
 =
 0.40
 ```
 
-This indicates a **positive linear association**.
+This indicates a positive linear association.
 
 Conceptually:
 
 ```text
 Weight ↑
+   ↕
 Height tends to ↑
-```
-
-The relationship is not perfect because:
-
-```math
-0.40<1
 ```
 
 ---
 
-# 50. 🩸 Interpreting DBP and SBP
+# 61. 🩸 DBP and SBP
 
 From the matrix:
 
 ```math
-r_{\text{DBP,SBP}}
+r_{\mathrm{DBP,SBP}}
 =
 0.79
 ```
 
-This indicates a relatively strong positive linear association.
+This represents a relatively strong positive linear relationship.
 
 ```text
 DBP ↑
-   ↕
+  ↕
 SBP ↑
 ```
 
 ---
 
-# 51. 🌡️ Interpreting Weight and Temperature
+# 62. 🌡️ Weight and Temperature
 
 From the matrix:
 
 ```math
-r_{\text{Weight,Temp}}
+r_{\mathrm{Weight,Temp}}
 =
 -0.03
 ```
 
-This value is very close to zero.
+Because this value is extremely close to zero:
 
-Therefore, these data show very little **linear association** between weight and temperature.
+> There is very little linear association between weight and temperature in this sample.
 
 ---
 
-# 52. 📉 Interpreting Height and SBP
+# 63. 📉 Height and SBP
 
 From the matrix:
 
 ```math
-r_{\text{Height,SBP}}
+r_{\mathrm{Height,SBP}}
 =
 -0.09
 ```
 
-This indicates a very weak negative linear association.
-
-Because the value is close to zero, the linear relationship is weak.
+This represents a very weak negative linear relationship.
 
 ---
 
-# 53. 🪞 Reading Both Halves of the Matrix
+# 64. 🪞 Why Does Each Correlation Appear Twice?
 
-Because correlation matrices are symmetric:
+Because:
 
 ```math
-r_{\text{Weight,Height}}
+\mathrm{Corr}(X,Y)
 =
-r_{\text{Height,Weight}}
+\mathrm{Corr}(Y,X)
 ```
 
-Therefore:
+therefore:
 
 ```math
-0.40=0.40
+r_{\mathrm{Weight,Height}}
+=
+r_{\mathrm{Height,Weight}}
 ```
 
-This means the upper and lower triangles contain duplicate information.
+Both are:
 
-Conceptually:
-
-```text
-        X₁    X₂    X₃
-X₁      1     a     b
-X₂      a     1     c
-X₃      b     c     1
+```math
+0.40
 ```
+
+Therefore the upper and lower parts of the matrix contain duplicate information.
 
 ---
 
-# 54. ⭐ What Does the Asterisk Mean?
+# 65. ⭐ What Does `*` Mean?
 
-If a table uses:
+If a correlation table contains:
 
 ```text
-*
+0.40*
 ```
 
-to mark some correlations, it **often** indicates statistical significance.
+or:
+
+```text
+0.79*
+```
+
+the asterisk often indicates statistical significance.
 
 For example:
 
-```text
-* p < 0.05
+```math
+p<0.05
 ```
 
 However:
 
-> ⚠️ The exact meaning of `*` must be checked in the table legend or accompanying notes.
+> ⚠️ Always check the table legend because the meaning of `*` depends on the source.
 
-Correlation strength and statistical significance are **not the same thing**.
+Also remember:
 
----
+> **Correlation magnitude and statistical significance are not the same thing.**
 
-# 55. ⚠️ Correlation Does Not Imply Causation
+A small correlation may become statistically significant with a very large sample.
 
-Suppose:
-
-```math
-r_{XY}=0.90
-```
-
-This means $X$ and $Y$ have a strong linear association.
-
-It does **not** prove:
-
-```text
-X causes Y
-```
-
-Possible explanations include:
-
-```text
-X → Y
-
-Y → X
-
-Z → X and Y
-
-Coincidence / sampling variation
-
-More complex relationships
-```
-
-Therefore:
-
-> 📌 **Correlation measures association, not causation.**
+A larger correlation may fail to reach significance with a very small sample.
 
 ---
 
-# 56. ⚠️ Correlation Can Be Affected by Outliers
+# 66. 🧮 Covariance Matrix in Matrix Form
 
-Pearson correlation can be strongly influenced by unusual observations.
-
-For example:
-
-```text
-● ● ● ● ●
-
-                     ●
-```
-
-A single extreme point may substantially change the calculated correlation.
-
-Therefore:
-
-> 📌 Always inspect the scatter plot before interpreting a correlation coefficient.
-
----
-
-# 57. 📈 Recommended Workflow
-
-When examining relationships between variables:
-
-```text
-Step 1
-Inspect raw data
-      ↓
-Step 2
-Create scatter plots
-      ↓
-Step 3
-Check for outliers
-      ↓
-Step 4
-Calculate covariance
-      ↓
-Step 5
-Calculate correlation
-      ↓
-Step 6
-Interpret direction and strength
-      ↓
-Step 7
-Consider standardization
-      ↓
-Step 8
-Proceed to multivariate analysis
-```
-
----
-
-# 58. 🧮 Matrix Representation of Covariance
-
-Suppose our data matrix contains:
+Suppose the data matrix is:
 
 ```math
 X=
@@ -1720,13 +1967,13 @@ Rows    → observations
 Columns → variables
 ```
 
-After centering each column, let the centered matrix be:
+After subtracting each variable's mean, let the centered matrix be:
 
 ```math
 X_c
 ```
 
-Then the sample covariance matrix can be written compactly as:
+The sample covariance matrix is:
 
 ```math
 \boxed{
@@ -1736,11 +1983,11 @@ X_c^T X_c
 }
 ```
 
-This equation is extremely important in multivariate statistics.
+This is one of the most important formulas in multivariate statistics.
 
 ---
 
-# 59. 🧠 Understanding the Matrix Formula
+# 67. 🧠 Understanding the Matrix Formula
 
 ```math
 S=
@@ -1761,7 +2008,7 @@ Transpose
         ↓
        Xcᵀ
         ↓
-Multiply
+Matrix multiplication
         ↓
       XcᵀXc
         ↓
@@ -1772,7 +2019,7 @@ Covariance Matrix
 
 ---
 
-# 60. 📐 Dimensions of the Covariance Matrix
+# 68. 📐 Dimensions of the Covariance Matrix
 
 Suppose:
 
@@ -1780,19 +2027,17 @@ Suppose:
 X_c
 ```
 
-has:
+has dimensions:
 
 ```math
 n\times p
 ```
 
-dimensions.
-
-That means:
+where:
 
 ```text
-n = observations
-p = variables
+n = number of observations
+p = number of variables
 ```
 
 Then:
@@ -1810,7 +2055,7 @@ p\times n
 Therefore:
 
 ```math
-X_c^T X_c
+X_c^TX_c
 ```
 
 has dimensions:
@@ -1825,55 +2070,52 @@ giving:
 p\times p
 ```
 
-Thus the covariance matrix has:
+Therefore:
 
-```text
-Number of rows    = number of variables
-Number of columns = number of variables
-```
+> 📌 The covariance matrix has one row and one column for every variable.
 
 ---
 
-# 61. 🔗 Relationship Between Variance, Covariance and Correlation
+# 69. 🔗 Relationship Between Variance, Covariance and Correlation
 
-The three concepts are directly connected:
+These three concepts are directly connected.
 
 ```text
-                    VARIANCE
-                       │
-                       │
+                  VARIANCE
+                     │
+                     ▼
           Spread of one variable
-                       │
-                       ▼
-                   COVARIANCE
-                       │
-                       │
-           Joint variation of two
-                 variables
-                       │
-                       ▼
-        Divide by both standard
-               deviations
-                       │
-                       ▼
-                  CORRELATION
+                     │
+                     ▼
+                 COVARIANCE
+                     │
+                     ▼
+         Joint variation of two
+                variables
+                     │
+                     ▼
+      Divide by both standard
+             deviations
+                     │
+                     ▼
+                CORRELATION
 ```
 
 Mathematically:
 
 ```math
-\operatorname{Var}(X)
+\mathrm{Var}(X)
 =
-\operatorname{Cov}(X,X)
+\mathrm{Cov}(X,X)
 ```
 
 and:
 
 ```math
-\operatorname{Corr}(X,Y)
+\mathrm{Corr}(X,Y)
 =
 \frac{
-\operatorname{Cov}(X,Y)
+\mathrm{Cov}(X,Y)
 }{
 s_Xs_Y
 }
@@ -1881,48 +2123,48 @@ s_Xs_Y
 
 ---
 
-# 62. 🧠 Easy Way to Remember
+# 70. 🧠 Easy Way to Remember
 
 ### 📏 Variance
 
-> **How much does ONE variable vary?**
+> How much does **one variable** vary?
 
 ```math
-\operatorname{Var}(X)
+\mathrm{Var}(X)
 ```
 
 ### 🔗 Covariance
 
-> **How do TWO variables vary together?**
+> How do **two variables** vary together?
 
 ```math
-\operatorname{Cov}(X,Y)
+\mathrm{Cov}(X,Y)
 ```
 
 ### 📊 Correlation
 
-> **How strongly and in what direction are TWO variables linearly associated, on a standardized scale?**
+> How strongly and in what direction are **two variables linearly associated**, after removing scale?
 
 ```math
-\operatorname{Corr}(X,Y)
+\mathrm{Corr}(X,Y)
 ```
 
 ---
 
-# 63. 📊 Covariance vs Correlation vs Standardization
+# 71. 📊 Variance vs Covariance vs Correlation vs Standardization
 
-| Concept | Main Question | Scale |
-|---|---|---|
-| 📏 Variance | How spread out is one variable? | Depends on units |
-| 🔗 Covariance | How do two variables vary together? | Depends on units |
-| 📊 Correlation | How strongly are two variables linearly associated? | $-1$ to $+1$ |
-| ⚖️ Standardization | How can variables be put on comparable scales? | Mean 0, SD 1 |
+| Concept            | Main Question                                       | Scale            |
+| ------------------ | --------------------------------------------------- | ---------------- |
+| 📏 Variance        | How spread out is one variable?                     | Depends on units |
+| 🔗 Covariance      | How do two variables vary together?                 | Depends on units |
+| 📊 Correlation     | How strongly are two variables linearly associated? | −1 to +1         |
+| ⚖️ Standardization | How can variables be put on comparable scales?      | Mean 0, SD 1     |
 
 ---
 
-# 64. ⭐ Connection to Eigenvalues and Eigenvectors
+# 72. ⭐ Connection to Eigenvalues and Eigenvectors
 
-The covariance matrix is directly connected to the eigenvector equation:
+The covariance matrix is directly connected to the eigenvector equation.
 
 ```math
 Sv=\lambda v
@@ -1930,9 +2172,9 @@ Sv=\lambda v
 
 where:
 
-- $S$ = covariance matrix
-- $v$ = eigenvector
-- $\lambda$ = eigenvalue
+* `S` = covariance matrix
+* `v` = eigenvector
+* `\lambda` = eigenvalue
 
 In PCA:
 
@@ -1958,7 +2200,7 @@ Explained by Each Component
 
 ---
 
-# 65. 🚀 Connection to PCA
+# 73. 🚀 Connection to PCA
 
 The basic PCA workflow is:
 
@@ -1976,45 +2218,53 @@ Principal Components
 Dimensionality Reduction
 ```
 
-This is why covariance, correlation, standardization, eigenvalues, and eigenvectors are usually learned before PCA.
+This is why we learn:
+
+```text
+Variance
+   ↓
+Covariance
+   ↓
+Correlation
+   ↓
+Standardization
+   ↓
+Eigenvalues + Eigenvectors
+   ↓
+PCA
+```
 
 ---
 
-# 66. ⚖️ Covariance PCA vs Correlation PCA
+# 74. ⚖️ Covariance-Based PCA vs Correlation-Based PCA
 
-If variables are measured on similar scales, PCA may be based on the:
-
-```text
-Covariance Matrix
-```
+If all variables are measured on similar scales, PCA can reasonably be based on the **covariance matrix**.
 
 If variables have very different units or scales, standardization is often appropriate.
 
-Then PCA effectively works with the:
+Then PCA is effectively based on the **correlation matrix**.
 
 ```text
-Correlation Matrix
+Variables on very different scales?
+            │
+      ┌─────┴─────┐
+      │           │
+     YES          NO
+      │           │
+      ▼           ▼
+Standardize    Covariance PCA
+      │        may be reasonable
+      ▼
+Correlation-based PCA
 ```
 
-Conceptually:
-
-```text
-Different scales?
-      │
-      ├── YES → Standardize → Correlation-based PCA
-      │
-      └── NO  → Covariance-based PCA may be reasonable
-```
-
-> 📌 Whether to standardize should depend on the scientific meaning of the variables, not only on an automatic rule.
+> 📌 Standardization should ultimately depend on the scientific meaning of the variables, not only on an automatic rule.
 
 ---
 
-# 67. 🧬 Why This Matters in Biology
+# 75. 🧬 Why This Matters in Biological Data
 
-Biological datasets often contain many variables with different scales.
-
-For example:
+Biological datasets may contain:
 
 ```text
 Patient / Sample
@@ -2030,45 +2280,45 @@ Patient / Sample
 └────────────────────────────┘
 ```
 
-We may want to know:
+We may ask:
 
 ```text
 Which variables vary together?
             ↓
-Covariance
+        Covariance
 
-How strong are their linear relationships?
+How strong is the linear relationship?
             ↓
-Correlation
+        Correlation
 
-How can differently scaled variables be compared?
+How can different scales be compared?
             ↓
-Standardization
+      Standardization
 
-How can many correlated variables be summarized?
+How can many variables be summarized?
             ↓
-PCA
+            PCA
 ```
 
 ---
 
-# 68. 🔬 Applications in Multivariate Statistics
+# 76. 🔬 Applications in Multivariate Statistics
 
-Covariance and correlation matrices are fundamental to:
+Covariance and correlation matrices are important in:
 
-- 📊 **Principal Component Analysis (PCA)**
-- 🎯 **Linear Discriminant Analysis (LDA)**
-- 📈 **Multivariate regression**
-- 🧩 **Clustering and exploratory analysis**
-- 🧬 **Gene expression analysis**
-- 🧪 **Metabolomics**
-- 🧫 **Proteomics**
-- 🧠 **Systems biology**
-- 🤖 **Machine learning**
+* 📊 Principal Component Analysis
+* 🎯 Linear Discriminant Analysis
+* 📈 Multivariate regression
+* 🧩 Clustering
+* 🧬 Gene expression analysis
+* 🧪 Metabolomics
+* 🧫 Proteomics
+* 🧠 Systems biology
+* 🤖 Machine learning
 
 ---
 
-# 69. 🔑 Key Formulas to Remember
+# 77. 🔑 Key Formulas
 
 ## Mean
 
@@ -2143,7 +2393,7 @@ z_i
 
 ```math
 S=
-\frac{1}{n-1}X_c^T X_c
+\frac{1}{n-1}X_c^TX_c
 ```
 
 ---
@@ -2156,9 +2406,9 @@ Sv=\lambda v
 
 ---
 
-# 70. 🧠 Important Distinctions
+# 78. 🧠 Important Distinctions
 
-### Variance vs Standard Deviation
+## Variance vs Standard Deviation
 
 ```text
 Variance
@@ -2170,7 +2420,9 @@ Standard Deviation
 Original units
 ```
 
-### Covariance vs Correlation
+---
+
+## Covariance vs Correlation
 
 ```text
 Covariance
@@ -2184,45 +2436,62 @@ Standardized
 Between -1 and +1
 ```
 
-### Centering vs Standardization
+---
 
-```text
-Centering
-   ↓
-Subtract mean
-   ↓
-Mean = 0
+## Centering vs Standardization
+
+### Centering
+
+```math
+x_i^{(c)}
+=
+x_i-\bar{x}
 ```
 
-```text
-Standardization
-   ↓
-Subtract mean
-+
-Divide by SD
-   ↓
-Mean = 0
-SD = 1
+Result:
+
+```math
+\mathrm{Mean}=0
+```
+
+### Standardization
+
+```math
+z_i
+=
+\frac{x_i-\bar{x}}{s_x}
+```
+
+Result:
+
+```math
+\mathrm{Mean}=0
+```
+
+and:
+
+```math
+\mathrm{SD}=1
 ```
 
 ---
 
-# 71. 🎯 Quick Summary Table
+# 79. 🎯 Quick Summary Table
 
-| Concept | Formula | Main Purpose |
-|---|---|---|
-| 📊 Mean | $\bar{x}$ | Center of data |
-| 📏 Variance | $s^2$ | Spread of one variable |
-| 📐 Standard deviation | $s$ | Spread in original units |
-| 🔗 Covariance | $s_{xy}$ | Joint variation |
-| 📈 Correlation | $r_{xy}$ | Standardized linear association |
-| ⚖️ Z-score | $z$ | Standardize observations |
-| 📊 Covariance matrix | $S$ | Joint variation among many variables |
-| 🔗 Correlation matrix | $R$ | Standardized relationships among many variables |
+| Concept               | Formula   | Main Purpose                               |
+| --------------------- | --------- | ------------------------------------------ |
+| 📊 Mean               | `\bar{x}` | Center of the data                         |
+| 📏 Variance           | `s^2`     | Spread of one variable                     |
+| 📐 Standard deviation | `s`       | Spread in original units                   |
+| 🔗 Covariance         | `s_{xy}`  | Joint variation                            |
+| 📈 Correlation        | `r_{xy}`  | Standardized linear association            |
+| ⚖️ Z-score            | `z`       | Standardize observations                   |
+| 📊 Covariance matrix  | `S`       | Joint variation among many variables       |
+| 🔗 Correlation matrix | `R`       | Standardized relationships among variables |
 
 ---
 
-# 72. 🗺️ Complete Concept Map
+# 80. 🗺️ Complete Concept Map
 
 ```text
                     MULTIVARIATE DATA
@@ -2248,7 +2517,7 @@ SD = 1
                   CORRELATION MATRIX
                            │
                            ▼
-              COVARIANCE / CORRELATION
+            COVARIANCE / CORRELATION
                        MATRIX
                            │
                            ▼
@@ -2271,34 +2540,34 @@ SD = 1
 
 ---
 
-# 73. 🌟 Final Key Takeaways
+# 81. 🌟 Key Takeaways
 
-- 📏 **Variance** measures the spread of one variable around its mean.
-- 📐 **Standard deviation** is the square root of variance and uses the original measurement units.
-- 🔗 **Covariance** measures how two variables vary together.
-- ➕ Positive covariance means the variables tend to move in the same direction.
-- ➖ Negative covariance means they tend to move in opposite directions.
-- 📊 **Correlation** is standardized covariance.
-- 🎯 Pearson correlation ranges from **−1 to +1**.
-- ⚠️ A correlation of zero means no **linear** association, not necessarily no relationship.
-- ⚠️ Correlation does not establish causation.
-- 📊 A covariance matrix contains **variances on the diagonal** and **covariances off the diagonal**.
-- 🔗 A correlation matrix contains **1s on the diagonal** and correlations off the diagonal.
-- 🪞 Covariance and correlation matrices are symmetric.
-- ⚖️ Standardization transforms variables to **mean 0 and standard deviation 1**.
-- ⭐ The covariance matrix of standardized variables equals their correlation matrix when the conventions are matched.
-- 📊 Covariance and correlation matrices form a major mathematical foundation for **PCA and other multivariate methods**.
+* 📏 **Variance** measures the spread of one variable around its mean.
+* 📐 **Standard deviation** is the square root of variance and uses the original measurement units.
+* 🔗 **Covariance** measures how two variables vary together.
+* ➕ Positive covariance means the variables tend to move in the same direction.
+* ➖ Negative covariance means they tend to move in opposite directions.
+* 📊 **Correlation** is standardized covariance.
+* 🎯 Pearson correlation ranges from **−1 to +1**.
+* ⚠️ A correlation near zero means little or no **linear** association, not necessarily no relationship.
+* ⚠️ Correlation does not prove causation.
+* 📊 A covariance matrix contains **variances on the diagonal** and **covariances off the diagonal**.
+* 🔗 A correlation matrix contains **1s on the diagonal** and correlations off the diagonal.
+* 🪞 Covariance and correlation matrices are symmetric.
+* ⚖️ Standardization transforms variables to **mean 0 and standard deviation 1**.
+* ⭐ The covariance matrix of standardized variables equals the corresponding correlation matrix when the same sample conventions are used.
+* 📊 These concepts form a major mathematical foundation for **PCA and multivariate statistics**.
 
 ---
 
-# 74. 🚀 Final Takeaway
+# 82. 🚀 Final Takeaway
 
 The complete progression is:
 
 ```text
 Individual Observations
         ↓
-      Mean
+       Mean
         ↓
     Deviations
         ↓
@@ -2323,10 +2592,10 @@ Dimensionality Reduction
 Advanced Multivariate Statistics
 ```
 
-> 🧠 **Easy memory trick:**  
+> 🧠 **Easy memory trick:**
 >
-> **Variance** = How does **one** variable vary?  
-> **Covariance** = How do **two** variables vary together?  
-> **Correlation** = How strongly and in what direction are they **linearly associated on a standardized scale**?  
-> **Standardization** = Put variables onto a **common scale**.  
-> **PCA** = Use these relationships to find the **major directions of variation**.
+> **Variance** = How does **one variable** vary?
+> **Covariance** = How do **two variables** vary together?
+> **Correlation** = How strongly and in what direction are they **linearly associated after removing scale**?
+> **Standardization** = Put variables onto a **common scale**.
+> **PCA** = Use the covariance/correlation structure to find the **major directions of variation**.
