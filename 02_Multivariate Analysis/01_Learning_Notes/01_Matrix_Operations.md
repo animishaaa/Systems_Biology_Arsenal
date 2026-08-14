@@ -318,28 +318,27 @@ $$
 
 The **identity matrix** is a special square matrix where:
 
--   diagonal elements = `1`
--   all other elements = `0`
+- diagonal elements = `1`
+- all other elements = `0`
 
 Example:
 
-$$
+```math
 I_3 =
 \begin{bmatrix}
 1 & 0 & 0 \\
 0 & 1 & 0 \\
 0 & 0 & 1
 \end{bmatrix}
-$$
+```
 
-📌 The identity matrix behaves like the number **1** in ordinary
-multiplication.
+📌 The identity matrix behaves like the number **1** in ordinary multiplication.
 
 For a matrix `A`:
 
-$$
+```math
 AI = IA = A
-$$
+```
 
 ------------------------------------------------------------------------
 
@@ -893,18 +892,18 @@ $$
 
 For:
 
-$$
+```math
 A =
 \begin{bmatrix}
 a & b & c \\
 d & e & f \\
 g & h & i
 \end{bmatrix}
-$$
+```
 
 one expansion is:
 
-$$
+```math
 \det(A)
 =
 a(ei-fh)
@@ -912,7 +911,7 @@ a(ei-fh)
 b(di-fg)
 +
 c(dh-eg)
-$$
+```
 
 📌 Determinants become especially important when studying:
 
@@ -974,17 +973,17 @@ Think of an inverse as an **undo operation**.
 
 If:
 
-$$
+```math
 A =
 \begin{bmatrix}
 a & b \\
 c & d
 \end{bmatrix}
-$$
+```
 
 then:
 
-$$
+```math
 A^{-1}
 =
 \frac{1}{ad-bc}
@@ -992,13 +991,13 @@ A^{-1}
 d & -b \\
 -c & a
 \end{bmatrix}
-$$
+```
 
 provided that:
 
-$$
+```math
 ad-bc \neq 0
-$$
+```
 
 ### Steps
 
@@ -1028,51 +1027,51 @@ then:
 
 Consider the system:
 
-$$
+```math
 2x+y=5
-$$
+```
 
-$$
+```math
 x+3y=6
-$$
+```
 
 This can be written as:
 
-$$
+```math
 A\mathbf{x}=\mathbf{b}
-$$
+```
 
 where:
 
-$$
+```math
 A =
 \begin{bmatrix}
 2 & 1 \\
 1 & 3
 \end{bmatrix}
-$$
+```
 
-$$
+```math
 \mathbf{x} =
 \begin{bmatrix}
 x \\
 y
 \end{bmatrix}
-$$
+```
 
 and:
 
-$$
+```math
 \mathbf{b} =
 \begin{bmatrix}
 5 \\
 6
 \end{bmatrix}
-$$
+```
 
 Therefore:
 
-$$
+```math
 \begin{bmatrix}
 2 & 1 \\
 1 & 3
@@ -1086,38 +1085,37 @@ y
 5 \\
 6
 \end{bmatrix}
-$$
+```
 
 If `A` is invertible:
 
-$$
+```math
 A\mathbf{x}=\mathbf{b}
-$$
+```
 
 Multiply both sides by:
 
-$$
+```math
 A^{-1}
-$$
+```
 
 Then:
 
-$$
+```math
 A^{-1}A\mathbf{x}=A^{-1}\mathbf{b}
-$$
+```
 
 Since:
 
-$$
+```math
 A^{-1}A=I
-$$
+```
 
 we get:
 
-$$
+```math
 \mathbf{x}=A^{-1}\mathbf{b}
-$$
-
+```
 This is one reason matrix inverses are useful.
 
 > 📌 In practical numerical computing, systems are usually solved with
@@ -1181,7 +1179,8 @@ This is useful, but it is only the beginning.
 
 ------------------------------------------------------------------------
 
-## Level 2 --- 📝 Matrix as Instructions
+
+## Level 2 — 📝 Matrix as Instructions
 
 Think:
 
@@ -1189,7 +1188,7 @@ Think:
 
 Example:
 
-$$
+```math
 \begin{bmatrix}
 1 & 2 \\
 3 & 4
@@ -1203,7 +1202,7 @@ $$
 17 \\
 39
 \end{bmatrix}
-$$
+```
 
 The matrix gives instructions for how the input values should be mixed
 together.
@@ -1242,17 +1241,16 @@ This perspective is central to **linear algebra**.
 
 If you remember only one thing, remember this:
 
-> 🏹 **A vector tells us "what we have."**\
+> 🏹 **A vector tells us "what we have."**  
 > ⚙️ **A matrix tells us "what to do with it."**
 
 Conceptually:
 
-$$
+```math
 \text{Matrix} \times \text{Vector}
 =
 \text{New Vector}
-$$
-
+```
 Think:
 
 ``` text
