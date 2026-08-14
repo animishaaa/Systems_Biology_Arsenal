@@ -1,6 +1,6 @@
-# 🧭 Eigenvectors and Eigenvalues 
+# 🧭 Eigenvectors and Eigenvalues
 
-Eigenvectors and eigenvalues are fundamental concepts in **linear algebra** and are especially important in **multivariate statistics**, **PCA**, **machine learning**, and **data analysis**.
+Eigenvectors and eigenvalues are fundamental concepts in **linear algebra** and are especially important in **multivariate statistics, PCA, machine learning, and data analysis**.
 
 ---
 
@@ -8,17 +8,17 @@ Eigenvectors and eigenvalues are fundamental concepts in **linear algebra** and 
 
 ## 🔍 Core Idea
 
-An **eigenvector** is a special vector whose **direction is preserved** when a matrix acts on it.
+An **eigenvector** is a special non-zero vector whose **direction is preserved** when a matrix acts on it.
 
-When a matrix transforms an eigenvector, the matrix may:
+A matrix may:
 
-* 📏 Stretch it
-* 🤏 Shrink it
-* 🔄 Flip its direction
+* 📏 Stretch the vector
+* 🤏 Shrink the vector
+* 🔄 Reverse its direction
 
-But the resulting vector remains on the **same line** as the original vector.
+However, the transformed vector remains on the **same line** as the original vector.
 
-> 💡 **Simple idea:** An eigenvector is a direction that is preserved by a matrix transformation.
+> 💡 **Simple idea:** An eigenvector represents a direction that is preserved by a matrix transformation.
 
 ---
 
@@ -32,11 +32,11 @@ $$
 
 where:
 
-* 🔢 **A** = square matrix
-* 🏹 **v** = eigenvector
-* ⭐ **λ (lambda)** = eigenvalue
+* 🔢 $A$ = square matrix
+* 🏹 $v$ = eigenvector
+* ⭐ $\lambda$ = eigenvalue
 
-The vector must satisfy:
+The eigenvector must satisfy:
 
 $$
 v \neq 0
@@ -48,11 +48,11 @@ because the zero vector is **not considered an eigenvector**.
 
 ## 🏭 Simple Intuition: Matrix as a Machine
 
-Imagine a matrix as a **transformation machine**.
+Imagine a matrix as a transformation machine:
 
 ```text
                  MATRIX A
-Vector v  ─────► [ MACHINE ] ─────► New Vector
+Vector v  ─────► [ MACHINE ] ─────► Transformed Vector
 ```
 
 For most vectors:
@@ -61,20 +61,20 @@ For most vectors:
 Direction before ≠ Direction after
 ```
 
-But for an eigenvector:
+For an eigenvector:
 
 ```text
 Direction before = Same line after
 ```
 
-Only its **size or orientation along that line** may change.
+Only its **magnitude or orientation along that line** may change.
 
 ### 🧒 Easy Analogy
 
 * 🏭 **Matrix:** "I'm a machine that transforms arrows."
 * 🏹 **Vector:** "I'm an arrow."
-* ⭐ **Eigenvector:** "I'm a special arrow. You can stretch, shrink, or flip me, but I stay on my special line."
-* 🔢 **Eigenvalue:** "I'm the number that tells you how much that special arrow changes."
+* ⭐ **Eigenvector:** "I'm a special arrow. You can stretch, shrink, or flip me, but I stay on the same line."
+* 🔢 **Eigenvalue:** "I'm the number that tells you how much that special arrow is scaled."
 
 ---
 
@@ -87,7 +87,7 @@ For example:
 $$
 v =
 \begin{bmatrix}
-2\
+2 \
 3
 \end{bmatrix}
 $$
@@ -99,63 +99,65 @@ A vector has two important properties:
 * 📏 **Magnitude** = its length
 * 🧭 **Direction** = where it points
 
-For eigenvectors, the important feature is primarily the **direction**.
+For eigenvectors, the most important feature is the **direction**.
 
-> 💡 Multiplying an eigenvector by a non-zero constant changes its length, but it still represents the same eigendirection.
+> 💡 Multiplying an eigenvector by any non-zero scalar changes its magnitude and possibly its orientation, but it remains on the same eigendirection.
 
 ---
 
 # 3. ✖️ Scaling a Vector
-
-A vector can be multiplied by a scalar.
 
 Suppose:
 
 $$
 v =
 \begin{bmatrix}
-1\
+1 \
 2
 \end{bmatrix}
 $$
 
-Multiply it by 2:
+Multiplying it by 2 gives:
 
 $$
 2v =
 \begin{bmatrix}
-2\
+2 \
 4
 \end{bmatrix}
 $$
 
-The vector becomes longer, but its direction remains the same.
+Similarly:
+
+$$
+3v =
+\begin{bmatrix}
+3 \
+6
+\end{bmatrix}
+$$
+
+All these vectors lie on the same line.
 
 ```text
-v   = (1, 2)
-
-2v  = (2, 4)
-
-3v  = (3, 6)
+v  = (1, 2)
+2v = (2, 4)
+3v = (3, 6)
 ```
 
-All these vectors lie along the **same line**.
+> 📌 **Important:** Multiplication by a positive scalar changes the magnitude but preserves the direction. A negative scalar reverses the orientation while keeping the vector on the same line.
 
-> 📌 **Important:** Scaling changes the magnitude of a vector, but multiplication by a positive scalar does not change its direction. Multiplication by a negative scalar reverses its orientation while keeping it on the same line.
-
-This idea is the foundation of the eigenvector equation.
+This idea is fundamental to understanding eigenvectors.
 
 ---
 
-# 4. 🧮 Eigenvector Equation Explained
+# 4. 🧮 The Eigenvector Equation
 
 The fundamental equation is:
 
 $$
 Av = \lambda v
 $$
-
-Let's break it down.
 
 ### Left Side
 
@@ -165,7 +167,7 @@ $$
 
 means:
 
-> Apply the matrix transformation **A** to vector **v**.
+> Apply the matrix transformation $A$ to vector $v$.
 
 ### Right Side
 
@@ -175,7 +177,7 @@ $$
 
 means:
 
-> Multiply vector **v** by the scalar **λ**.
+> Scale vector $v$ by the number $\lambda$.
 
 Therefore:
 
@@ -183,11 +185,11 @@ $$
 Av = \lambda v
 $$
 
-means that applying the matrix produces exactly the same result as simply **scaling the vector**.
+means that applying the matrix to $v$ produces the same result as simply **scaling $v$**.
 
 ---
 
-## 🧠 Interpretation
+## 🧠 Interpreting $\lambda$
 
 If:
 
@@ -195,7 +197,7 @@ $$
 Av = 2v
 $$
 
-then the matrix doubles the eigenvector.
+the vector is stretched by a factor of 2.
 
 If:
 
@@ -203,7 +205,7 @@ $$
 Av = 0.5v
 $$
 
-then the matrix shrinks the eigenvector to half its size.
+the vector is shrunk to half its original magnitude.
 
 If:
 
@@ -211,37 +213,35 @@ $$
 Av = -v
 $$
 
-then the vector is flipped to the opposite direction along the same line.
+the vector is reversed while remaining on the same line.
 
 ---
 
 # 5. 🧩 Example Matrix
 
-Consider the matrix:
+Consider:
 
 $$
 A =
 \begin{bmatrix}
-1 & 1\
+1 & 1 \
 2 & 0
 \end{bmatrix}
 $$
 
-We will use this example to understand how to:
+We will use this matrix to:
 
 1. 🧪 Test vectors
 2. 🔢 Find eigenvalues
 3. 🏹 Find eigenvectors
 4. 📏 Normalize eigenvectors
-5. ⟂ Check orthogonality
-
-> 📌 The exact calculations below demonstrate the general procedure used for eigenvalue and eigenvector problems.
+5. ⟂ Discuss orthogonality
 
 ---
 
 # 6. 🧪 Testing Whether a Vector Is an Eigenvector
 
-To determine whether a vector **v** is an eigenvector of **A**, calculate:
+To determine whether $v$ is an eigenvector of $A$, calculate:
 
 $$
 Av
@@ -249,121 +249,7 @@ $$
 
 Then ask:
 
-> ❓ Is the resulting vector a scalar multiple of the original vector?
-
----
-
-## ❌ Example: Not an Eigenvector
-
-Consider:
-
-$$
-v =
-\begin{bmatrix}
-2\
-2
-\end{bmatrix}
-$$
-
-Using:
-
-$$
-A =
-\begin{bmatrix}
-1 & 1\
-2 & 0
-\end{bmatrix}
-$$
-
-calculate:
-
-$$
-Av =
-\begin{bmatrix}
-1 & 1\
-2 & 0
-\end{bmatrix}
-\begin{bmatrix}
-2\
-2
-\end{bmatrix}
-$$
-
-Therefore:
-
-$$
-Av =
-\begin{bmatrix}
-4\
-4
-\end{bmatrix}
-$$
-
-Notice:
-
-$$
-Av = 2v
-$$
-
-So for this particular matrix, **v actually is an eigenvector**.
-
-Its eigenvalue is:
-
-$$
-\lambda = 2
-$$
-
----
-
-## ❌ Example of a True Non-Eigenvector
-
-Instead consider:
-
-$$
-v =
-\begin{bmatrix}
-1\
-0
-\end{bmatrix}
-$$
-
-Then:
-
-$$
-Av =
-\begin{bmatrix}
-1\
-2
-\end{bmatrix}
-$$
-
-There is no scalar **λ** such that:
-
-$$
-\begin{bmatrix}
-1\
-2
-\end{bmatrix}
-=============
-
-\lambda
-\begin{bmatrix}
-1\
-0
-\end{bmatrix}
-$$
-
-Therefore:
-
-❌ Direction changed
-❌ Result is not a scalar multiple of the original vector
-➡️ **Not an eigenvector**
-
----
-
-# 7. 🔢 What Is an Eigenvalue?
-
-An **eigenvalue** tells us how much the corresponding eigenvector is scaled by the matrix transformation.
+> ❓ Is $Av$ a scalar multiple of $v$?
 
 If:
 
@@ -371,61 +257,188 @@ $$
 Av = \lambda v
 $$
 
-then **λ** is the eigenvalue.
+for some scalar $\lambda$, then $v$ is an eigenvector.
 
 ---
 
-## 📌 Example
+## ✅ Example: An Eigenvector
 
-Suppose:
+Consider:
+
+$$
+v =
+\begin{bmatrix}
+2 \
+2
+\end{bmatrix}
+$$
+
+Then:
+
+$$
+Av =
+\begin{bmatrix}
+1 & 1 \
+2 & 0
+\end{bmatrix}
+\begin{bmatrix}
+2 \
+2
+\end{bmatrix}
+$$
+
+Therefore:
+
+$$
+Av =
+\begin{bmatrix}
+4 \
+4
+\end{bmatrix}
+$$
+
+But:
+
+$$
+2v =
+2
+\begin{bmatrix}
+2 \
+2
+\end{bmatrix}
+=============
+
+\begin{bmatrix}
+4 \
+4
+\end{bmatrix}
+$$
+
+Therefore:
 
 $$
 Av = 2v
 $$
 
-Then:
+✅ $v$ is an **eigenvector**.
+
+⭐ Its eigenvalue is:
 
 $$
 \lambda = 2
 $$
 
-Meaning:
+---
 
-➡️ The eigenvector becomes **twice as large**.
+## ❌ Example: Not an Eigenvector
+
+Now consider:
+
+$$
+v =
+\begin{bmatrix}
+1 \
+0
+\end{bmatrix}
+$$
+
+Then:
+
+$$
+Av =
+\begin{bmatrix}
+1 & 1 \
+2 & 0
+\end{bmatrix}
+\begin{bmatrix}
+1 \
+0
+\end{bmatrix}
+=============
+
+\begin{bmatrix}
+1 \
+2
+\end{bmatrix}
+$$
+
+There is no scalar $\lambda$ such that:
+
+$$
+\begin{bmatrix}
+1 \
+2
+\end{bmatrix}
+=============
+
+\lambda
+\begin{bmatrix}
+1 \
+0
+\end{bmatrix}
+$$
+
+Therefore:
+
+* ❌ Direction changed
+* ❌ $Av$ is not a scalar multiple of $v$
+* ➡️ $v$ is **not an eigenvector**
 
 ---
 
-## 🔍 Interpreting Eigenvalues
+# 7. 🔢 What Is an Eigenvalue?
 
-|        Eigenvalue | Effect                                    |
-| ----------------: | ----------------------------------------- |
-|     $\lambda > 1$ | 📈 Vector stretches                       |
-| $0 < \lambda < 1$ | 📉 Vector shrinks                         |
-|     $\lambda = 1$ | ➡️ Vector unchanged                       |
-|     $\lambda = 0$ | 🔴 Vector collapses to zero               |
-|     $\lambda < 0$ | 🔄 Vector flips orientation and is scaled |
+The **eigenvalue** tells us how much the corresponding eigenvector is scaled.
 
-> 💡 The **magnitude** $|\lambda|$ describes the scaling, while the sign tells us whether the orientation along the eigenvector line is reversed.
-
----
-
-# 8. ♾️ Many Eigenvectors for One Eigenvalue
-
-Suppose **v** is an eigenvector:
+If:
 
 $$
 Av = \lambda v
 $$
 
-Multiply **v** by any non-zero scalar **c**.
+then $\lambda$ is the eigenvalue.
 
-Then:
+### 📌 Example
+
+If:
 
 $$
-A(cv)
+Av = 2v
 $$
 
-Using linearity:
+then:
+
+$$
+\lambda = 2
+$$
+
+➡️ The eigenvector is stretched by a factor of 2.
+
+---
+
+## 🔍 Interpreting Eigenvalues
+
+| Eigenvalue        | Effect                             |
+| ----------------- | ---------------------------------- |
+| $\lambda > 1$     | 📈 Stretches                       |
+| $0 < \lambda < 1$ | 📉 Shrinks                         |
+| $\lambda = 1$     | ➡️ Unchanged                       |
+| $\lambda = 0$     | 🔴 Collapses to the zero vector    |
+| $\lambda < 0$     | 🔄 Reverses orientation and scales |
+
+> 💡 The magnitude $|\lambda|$ determines the scaling factor, while the sign indicates whether the orientation is reversed.
+
+---
+
+# 8. ♾️ Many Eigenvectors for One Eigenvalue
+
+Suppose:
+
+$$
+Av = \lambda v
+$$
+
+If $c$ is any non-zero scalar, then:
 
 $$
 A(cv) = cAv
@@ -443,84 +456,80 @@ $$
 A(cv) = c\lambda v
 $$
 
-or:
+and therefore:
 
 $$
 A(cv) = \lambda(cv)
 $$
 
-Therefore:
+Thus:
 
 $$
 \boxed{cv \text{ is also an eigenvector}}
 $$
 
----
-
-## 📌 Example
+### 📌 Example
 
 If:
 
 $$
 v =
 \begin{bmatrix}
-1\
+1 \
 1
 \end{bmatrix}
 $$
 
-is an eigenvector, then all of these are also eigenvectors:
+is an eigenvector, then:
 
 $$
 \begin{bmatrix}
-2\
+2 \
 2
 \end{bmatrix},
-\quad
+\qquad
 \begin{bmatrix}
-3\
+3 \
 3
 \end{bmatrix},
-\quad
+\qquad
 \begin{bmatrix}
--1\
+-1 \
 -1
 \end{bmatrix}
 $$
 
-They all represent the same **eigendirection**.
+are also eigenvectors corresponding to the same eigenvalue.
 
-> ⭐ An eigenvalue therefore usually corresponds to infinitely many scalar multiples of an eigenvector.
+> ⭐ Eigenvectors are therefore not unique. Any non-zero scalar multiple of an eigenvector is another eigenvector for the same eigenvalue.
 
 ---
 
-# 9. 📏 Unit-Length / Normalized Eigenvectors
+# 9. 📏 Normalized Eigenvectors
 
-Because eigenvectors can have different lengths, we often convert them to **unit vectors**.
+Eigenvectors are often normalized so that their length equals 1.
 
-A unit vector has:
+A normalized vector satisfies:
 
 $$
 |v| = 1
 $$
 
-This process is called **normalization**.
-
 ---
 
-## 🧮 Step 1: Calculate Vector Length
+## 🧮 Step 1: Calculate the Length
 
 For:
 
 $$
 v =
 \begin{bmatrix}
-a\
+a \
 b
 \end{bmatrix}
 $$
 
-the Euclidean length is:
+the Euclidean norm is:
 
 $$
 |v| = \sqrt{a^2+b^2}
@@ -528,36 +537,35 @@ $$
 
 ---
 
-## 🧮 Step 2: Divide by the Length
+## 🧮 Step 2: Normalize
 
-The normalized vector is:
+The normalized eigenvector is:
 
 $$
 \hat{v} = \frac{v}{|v|}
 $$
 
----
+### 📌 Example
 
-## 📌 Example
-
-Suppose:
+For:
 
 $$
 v =
 \begin{bmatrix}
-1\
+1 \
 1
 \end{bmatrix}
 $$
 
-Its length is:
+the length is:
 
 $$
-|v| = \sqrt{1^2+1^2}
-$$
+|v|
+===
 
-$$
-= \sqrt{2}
+# \sqrt{1^2+1^2}
+
+\sqrt{2}
 $$
 
 Therefore:
@@ -568,7 +576,7 @@ $$
 
 \frac{1}{\sqrt{2}}
 \begin{bmatrix}
-1\
+1 \
 1
 \end{bmatrix}
 $$
@@ -580,8 +588,8 @@ $$
 =======
 
 \begin{bmatrix}
-1/\sqrt{2}\
-1/\sqrt{2}
+\frac{1}{\sqrt{2}} \
+\frac{1}{\sqrt{2}}
 \end{bmatrix}
 $$
 
@@ -589,31 +597,26 @@ Approximately:
 
 $$
 \hat{v}
-=======
-
+\approx
 \begin{bmatrix}
-0.707\
+0.707 \
 0.707
 \end{bmatrix}
 $$
 
----
+### 🎯 Why Normalize?
 
-## 🎯 Why Normalize Eigenvectors?
-
-Normalization is useful for:
+Normalization is useful in:
 
 * 📊 PCA
-* 📈 Multivariate analysis
-* 🧭 Comparing directions
-* 💻 Numerical computation
+* 📈 Multivariate statistics
+* 🧭 Direction comparison
+* 💻 Numerical calculations
 * 🔄 Coordinate transformations
 
 ---
 
 # 10. 🔎 Finding Eigenvalues – Core Procedure
-
-This is one of the most important procedures to remember.
 
 We start with:
 
@@ -621,17 +624,13 @@ $$
 Av = \lambda v
 $$
 
----
-
-## Step 1️⃣: Rearrange the Equation
-
-Move everything to one side:
+## Step 1️⃣: Rearrange
 
 $$
-Av-\lambda v=0
+Av - \lambda v = 0
 $$
 
-Since:
+Because:
 
 $$
 v = Iv
@@ -640,59 +639,68 @@ $$
 we can write:
 
 $$
-Av-\lambda Iv=0
+Av - \lambda Iv = 0
 $$
 
-Factor out **v**:
+Factor out $v$:
 
 $$
-(A-\lambda I)v=0
+(A-\lambda I)v = 0
 $$
 
-where **I** is the identity matrix.
+where $I$ is the identity matrix.
 
 ---
 
-## Step 2️⃣: Set the Determinant Equal to Zero
+## Step 2️⃣: Characteristic Equation
 
-For a **non-zero solution** for $v$ to exist:
+For a non-zero solution $v$ to exist, the matrix $A-\lambda I$ must be singular.
+
+Therefore:
 
 $$
 \boxed{\det(A-\lambda I)=0}
 $$
 
-This is called the **characteristic equation**.
-
-> 🧠 **Very important formula:**
-> To find eigenvalues, calculate $\det(A-\lambda I)$ and set it equal to zero.
+This is the **characteristic equation**.
 
 ---
 
-## Step 3️⃣: Apply It to Our Example
+## Step 3️⃣: Apply It to Our Matrix
 
 Recall:
 
 $$
 A =
 \begin{bmatrix}
-1 & 1\
+1 & 1 \
 2 & 0
 \end{bmatrix}
 $$
 
-Then:
+The identity matrix is:
+
+$$
+I =
+\begin{bmatrix}
+1 & 0 \
+0 & 1
+\end{bmatrix}
+$$
+
+Therefore:
 
 $$
 A-\lambda I
 ===========
 
 \begin{bmatrix}
-1-\lambda & 1\
+1-\lambda & 1 \
 2 & -\lambda
 \end{bmatrix}
 $$
 
-Calculate the determinant:
+Now calculate the determinant:
 
 $$
 \det(A-\lambda I)
@@ -701,7 +709,7 @@ $$
 (1-\lambda)(-\lambda)-(1)(2)
 $$
 
-Therefore:
+Expanding:
 
 $$
 -\lambda+\lambda^2-2=0
@@ -715,19 +723,24 @@ $$
 
 ---
 
-## Step 4️⃣: Solve the Polynomial
+## Step 4️⃣: Solve the Characteristic Polynomial
 
 Factor:
 
 $$
-\lambda^2-\lambda-2=0
+\lambda^2-\lambda-2
+===================
+
+(\lambda-2)(\lambda+1)
 $$
+
+Therefore:
 
 $$
 (\lambda-2)(\lambda+1)=0
 $$
 
-Therefore:
+So:
 
 $$
 \boxed{\lambda_1=2}
@@ -739,7 +752,7 @@ $$
 \boxed{\lambda_2=-1}
 $$
 
-These are the **eigenvalues** of matrix **A**.
+These are the two eigenvalues of $A$.
 
 ---
 
@@ -761,13 +774,11 @@ Solve for λ
 Eigenvalues
 ```
 
-> 🖼️ **Figure:** Add characteristic polynomial graph from **PDF page 6**.
-
 ---
 
 # 11. 🏹 Finding Eigenvectors for Each Eigenvalue
 
-Once the eigenvalues are known, substitute each value into:
+Once the eigenvalues are known, substitute each eigenvalue into:
 
 $$
 (A-\lambda I)v=0
@@ -790,7 +801,7 @@ A-2I
 ====
 
 \begin{bmatrix}
--1 & 1\
+-1 & 1 \
 2 & -2
 \end{bmatrix}
 $$
@@ -800,7 +811,7 @@ Let:
 $$
 v =
 \begin{bmatrix}
-x\
+x \
 y
 \end{bmatrix}
 $$
@@ -809,28 +820,49 @@ Then:
 
 $$
 \begin{bmatrix}
--1 & 1\
+-1 & 1 \
 2 & -2
 \end{bmatrix}
 \begin{bmatrix}
-x\
+x \
 y
 \end{bmatrix}
 =============
 
 \begin{bmatrix}
-0\
+0 \
 0
 \end{bmatrix}
 $$
 
-The first equation gives:
+Multiplying gives:
+
+$$
+\begin{bmatrix}
+-x+y \
+2x-2y
+\end{bmatrix}
+=============
+
+\begin{bmatrix}
+0 \
+0
+\end{bmatrix}
+$$
+
+Therefore:
 
 $$
 -x+y=0
 $$
 
-Therefore:
+and:
+
+$$
+2x-2y=0
+$$
+
+Both equations give the same relationship:
 
 $$
 y=x
@@ -854,41 +886,93 @@ $$
 \boxed{
 v_1=
 \begin{bmatrix}
-1\
+1 \
 1
 \end{bmatrix}
 }
 $$
 
+Any non-zero scalar multiple of this vector is also an eigenvector.
+
 ---
 
 ## ⭐ Eigenvector for $\lambda=-1$
 
-Now substitute:
+Substitute:
 
 $$
 \lambda=-1
 $$
 
-Then:
+Since:
+
+$$
+A-(-1)I=A+I
+$$
+
+we obtain:
 
 $$
 A+I
 ===
 
 \begin{bmatrix}
-2 & 1\
+2 & 1 \
 2 & 1
 \end{bmatrix}
 $$
 
-Solve:
+Again let:
+
+$$
+v =
+\begin{bmatrix}
+x \
+y
+\end{bmatrix}
+$$
+
+Then:
+
+$$
+\begin{bmatrix}
+2 & 1 \
+2 & 1
+\end{bmatrix}
+\begin{bmatrix}
+x \
+y
+\end{bmatrix}
+=============
+
+\begin{bmatrix}
+0 \
+0
+\end{bmatrix}
+$$
+
+Multiplying gives:
+
+$$
+\begin{bmatrix}
+2x+y \
+2x+y
+\end{bmatrix}
+=============
+
+\begin{bmatrix}
+0 \
+0
+\end{bmatrix}
+$$
+
+Therefore:
 
 $$
 2x+y=0
 $$
 
-Therefore:
+Solve for $y$:
 
 $$
 y=-2x
@@ -912,7 +996,7 @@ $$
 \boxed{
 v_2=
 \begin{bmatrix}
-1\
+1 \
 -2
 \end{bmatrix}
 }
@@ -920,9 +1004,9 @@ $$
 
 ---
 
-# 12. ✅ Verifying Eigenvectors
+# 12. ✅ Verifying the Eigenvectors
 
-Always verify your answer using:
+Always verify an eigenvector using:
 
 $$
 Av=\lambda v
@@ -932,12 +1016,12 @@ $$
 
 ## 🔍 Check $\lambda=2$
 
-Eigenvector:
+We found:
 
 $$
 v_1=
 \begin{bmatrix}
-1\
+1 \
 1
 \end{bmatrix}
 $$
@@ -949,24 +1033,22 @@ Av_1
 ====
 
 \begin{bmatrix}
-1 & 1\
+1 & 1 \
 2 & 0
 \end{bmatrix}
 \begin{bmatrix}
-1\
+1 \
 1
 \end{bmatrix}
-$$
-
-# $$
+=============
 
 \begin{bmatrix}
-2\
+2 \
 2
 \end{bmatrix}
 $$
 
-Meanwhile:
+Now calculate:
 
 $$
 2v_1
@@ -974,13 +1056,13 @@ $$
 
 2
 \begin{bmatrix}
-1\
+1 \
 1
 \end{bmatrix}
 =============
 
 \begin{bmatrix}
-2\
+2 \
 2
 \end{bmatrix}
 $$
@@ -988,7 +1070,7 @@ $$
 Therefore:
 
 $$
-Av_1=2v_1
+\boxed{Av_1=2v_1}
 $$
 
 ✅ **Correct**
@@ -997,12 +1079,12 @@ $$
 
 ## 🔍 Check $\lambda=-1$
 
-Eigenvector:
+We found:
 
 $$
 v_2=
 \begin{bmatrix}
-1\
+1 \
 -2
 \end{bmatrix}
 $$
@@ -1014,31 +1096,37 @@ Av_2
 ====
 
 \begin{bmatrix}
-1 & 1\
+1 & 1 \
 2 & 0
 \end{bmatrix}
 \begin{bmatrix}
-1\
+1 \
 -2
 \end{bmatrix}
-$$
-
-# $$
+=============
 
 \begin{bmatrix}
--1\
+-1 \
 2
 \end{bmatrix}
 $$
 
-Meanwhile:
+Now:
 
 $$
 -v_2
 ====
 
+*
+
 \begin{bmatrix}
--1\
+1 \
+-2
+\end{bmatrix}
+=============
+
+\begin{bmatrix}
+-1 \
 2
 \end{bmatrix}
 $$
@@ -1046,7 +1134,7 @@ $$
 Therefore:
 
 $$
-Av_2=-v_2
+\boxed{Av_2=-v_2}
 $$
 
 ✅ **Correct**
@@ -1057,15 +1145,13 @@ $$
 
 ## 📐 Definition
 
-Two vectors are **orthogonal** when they meet at a **90° angle**.
-
-Mathematically, their dot product must equal zero:
+Two vectors are **orthogonal** if their dot product is zero:
 
 $$
 v_1^Tv_2=0
 $$
 
-or:
+or equivalently:
 
 $$
 v_1\cdot v_2=0
@@ -1073,14 +1159,61 @@ $$
 
 ---
 
-## 📌 Example
+## 📌 Simple Example
 
 Consider:
 
 $$
+u=
+\begin{bmatrix}
+1 \
+1
+\end{bmatrix}
+$$
+
+and:
+
+$$
+w=
+\begin{bmatrix}
+1 \
+-1
+\end{bmatrix}
+$$
+
+Their dot product is:
+
+$$
+u\cdot w
+========
+
+(1)(1)+(1)(-1)
+$$
+
+Therefore:
+
+$$
+u\cdot w=1-1=0
+$$
+
+So:
+
+$$
+\boxed{u\perp w}
+$$
+
+✅ The vectors are orthogonal.
+
+---
+
+## ⚠️ Are the Eigenvectors of Our Matrix Orthogonal?
+
+Our eigenvectors are:
+
+$$
 v_1=
 \begin{bmatrix}
-1\
+1 \
 1
 \end{bmatrix}
 $$
@@ -1090,8 +1223,8 @@ and:
 $$
 v_2=
 \begin{bmatrix}
-1\
--1
+1 \
+-2
 \end{bmatrix}
 $$
 
@@ -1101,70 +1234,28 @@ $$
 v_1\cdot v_2
 ============
 
-(1)(1)+(1)(-1)
+# (1)(1)+(1)(-2)
+
+-1
 $$
 
-$$
-=1-1
-$$
+Since:
 
 $$
-=0
+-1\neq0
 $$
 
-Therefore:
+the eigenvectors are **not orthogonal**.
+
+❌ Therefore:
 
 $$
-\boxed{v_1\perp v_2}
+v_1 \not\perp v_2
 $$
 
-✅ The vectors are **orthogonal**.
+> 💡 Eigenvectors associated with different eigenvalues are **not automatically orthogonal for every matrix**.
 
----
-
-## ⚠️ Important Note About Our Example Matrix
-
-For our example matrix:
-
-$$
-A =
-\begin{bmatrix}
-1 & 1\
-2 & 0
-\end{bmatrix}
-$$
-
-the eigenvectors were:
-
-$$
-v_1=
-\begin{bmatrix}
-1\
-1
-\end{bmatrix},
-\qquad
-v_2=
-\begin{bmatrix}
-1\
--2
-\end{bmatrix}
-$$
-
-Their dot product is:
-
-$$
-(1)(1)+(1)(-2)=-1
-$$
-
-Therefore:
-
-❌ These particular eigenvectors are **not orthogonal**.
-
-> 💡 Eigenvectors corresponding to different eigenvalues are **not automatically orthogonal for every matrix**.
-
-A particularly important result is:
-
-> ⭐ For a **real symmetric matrix**, eigenvectors corresponding to distinct eigenvalues can be chosen to be orthogonal.
+However, for a **real symmetric matrix**, eigenvectors corresponding to distinct eigenvalues are orthogonal.
 
 This property is extremely important in **PCA**.
 
@@ -1178,44 +1269,44 @@ $$
 A=A^T
 $$
 
-Example:
+For example:
 
 $$
 A=
 \begin{bmatrix}
-2 & 1\
+2 & 1 \
 1 & 2
 \end{bmatrix}
 $$
 
-Notice that the matrix is mirrored across its main diagonal.
+A real symmetric matrix has several important properties:
 
-Symmetric matrices have several useful properties:
-
-* ✅ Eigenvalues are real
-* ⟂ Eigenvectors associated with distinct eigenvalues are orthogonal
+* ✅ Its eigenvalues are real
+* ⟂ Eigenvectors corresponding to distinct eigenvalues are orthogonal
 * 📏 Eigenvectors can be normalized
 * 🧭 An orthonormal eigenvector basis can be constructed
 
-This matters because **covariance matrices and correlation matrices are symmetric**.
+This is especially important because **covariance and correlation matrices are symmetric**.
 
-Therefore, PCA benefits directly from these properties.
+Therefore, these properties are fundamental to PCA.
 
 ---
 
 # 15. 📏 Orthogonal vs. Orthonormal
 
-These terms are related but not identical.
-
 ### ⟂ Orthogonal
 
-Vectors are orthogonal when:
+Two vectors are orthogonal if:
 
 $$
 v_i^Tv_j=0
 $$
 
-for different vectors.
+for:
+
+$$
+i\neq j
+$$
 
 ### 📏 Normalized
 
@@ -1227,60 +1318,54 @@ $$
 
 ### ⭐ Orthonormal
 
-Vectors are **orthonormal** when they are:
+A set of vectors is **orthonormal** when the vectors are:
 
-1. ⟂ Orthogonal to each other
-2. 📏 Each has unit length
-
-So:
+1. ⟂ Orthogonal to one another
+2. 📏 Each normalized to unit length
 
 ```text
 Orthogonal
-     +
-Normalized
-     ↓
+    +
+Unit Length
+    ↓
 Orthonormal
 ```
-
-This is particularly important in **PCA**.
 
 ---
 
 # 16. 🧠 Complete Eigenvalue/Eigenvector Workflow
 
-When given a matrix **A**, follow this procedure:
-
 ```text
                     MATRIX A
                        ↓
-              Write Av = λv
+                 Av = λv
                        ↓
-              (A - λI)v = 0
+                (A-λI)v = 0
                        ↓
-             det(A - λI) = 0
+              det(A-λI) = 0
                        ↓
           Characteristic equation
                        ↓
-              Solve for λ
+                 Solve for λ
                        ↓
-                 Eigenvalues
+                  Eigenvalues
                        ↓
-        Substitute each λ separately
+         Substitute each λ separately
                        ↓
-              (A - λI)v = 0
+                (A-λI)v = 0
                        ↓
-             Solve for vector v
+               Solve for v
                        ↓
-                 Eigenvectors
+                  Eigenvectors
                        ↓
-             Normalize if needed
+              Normalize if needed
                        ↓
-             Verify Av = λv
+                Verify Av = λv
                        ↓
-        Check orthogonality if relevant
+          Check orthogonality if needed
 ```
 
-> 🎯 **Exam tip:** Remember the sequence:
+> 🎯 **Exam tip:**
 > **Determinant → Eigenvalues → Eigenvectors → Normalize → Verify**
 
 ---
@@ -1293,23 +1378,17 @@ $$
 \boxed{Av=\lambda v}
 $$
 
----
-
 ## 🔎 Characteristic Equation
 
 $$
 \boxed{\det(A-\lambda I)=0}
 $$
 
----
-
 ## 🏹 Finding Eigenvectors
 
 $$
 \boxed{(A-\lambda I)v=0}
 $$
-
----
 
 ## 📏 Vector Length
 
@@ -1318,35 +1397,34 @@ For:
 $$
 v=
 \begin{bmatrix}
-v_1\
-v_2\
-\vdots\
+v_1 \
+v_2 \
+\vdots \
 v_n
 \end{bmatrix}
 $$
 
-the length is:
+the Euclidean norm is:
 
 $$
 \boxed{
-|v|=
-\sqrt{
-v_1^2+v_2^2+\cdots+v_n^2
-}
+|v|
+===
+
+\sqrt{v_1^2+v_2^2+\cdots+v_n^2}
 }
 $$
-
----
 
 ## 📐 Normalization
 
 $$
 \boxed{
-\hat{v}=\frac{v}{|v|}
+\hat{v}
+=======
+
+\frac{v}{|v|}
 }
 $$
-
----
 
 ## ⟂ Orthogonality
 
@@ -1360,11 +1438,11 @@ $$
 
 # 18. 📊 Why Eigenvectors Matter in PCA
 
-Eigenvalues and eigenvectors are the mathematical foundation of **Principal Component Analysis (PCA)**.
+Eigenvalues and eigenvectors form the mathematical foundation of **Principal Component Analysis (PCA)**.
 
-PCA attempts to find new directions that explain the variation in a multivariate dataset.
+PCA finds new directions that explain variation in multivariate data.
 
-Suppose our original variables are:
+Suppose the original variables are:
 
 ```text
 X₁
@@ -1373,7 +1451,7 @@ X₃
 X₄
 ```
 
-PCA creates new directions:
+PCA transforms them into principal components:
 
 ```text
 PC1
@@ -1382,7 +1460,7 @@ PC3
 PC4
 ```
 
-These directions are determined from **eigenvectors** of a covariance or correlation matrix.
+These principal-component directions are determined from the **eigenvectors of the covariance or correlation matrix**.
 
 ---
 
@@ -1404,109 +1482,93 @@ Eigenvector 3 → Direction of PC3
 
 ## 🔢 Eigenvalues in PCA
 
-Eigenvalues tell us:
+Eigenvalues indicate how much variance is associated with each principal component.
 
-> 📊 **How much variance is captured along each principal-component direction**
-
-Typically:
+Usually:
 
 $$
 \lambda_1 \geq \lambda_2 \geq \lambda_3 \geq \cdots
 $$
-
-The largest eigenvalue corresponds to the direction containing the greatest variance.
 
 Therefore:
 
 ```text
 Largest eigenvalue
         ↓
-Most variance explained
+Largest amount of variance
         ↓
-Most important principal component
+First principal component (PC1)
 ```
+
+> 💡 In PCA, eigenvectors determine the **directions**, while eigenvalues quantify the **variance explained along those directions**.
 
 ---
 
 # 19. 🧬 Why This Matters in Biology and Data Analysis
 
-Eigenvectors and eigenvalues are widely used in biological and biomedical data analysis.
+Eigenvalues and eigenvectors are widely used in:
 
-### 🧬 Gene Expression Analysis
-
-Gene-expression datasets can contain:
-
-```text
-Thousands of genes
-        ↓
-Hundreds of samples
-        ↓
-Very high-dimensional data
-```
-
-PCA uses eigenvectors to identify major patterns in these data.
+* 🧬 Gene expression analysis
+* 📊 Principal Component Analysis
+* 🔬 Feature extraction
+* 📉 Dimensionality reduction
+* 🧫 Systems biology
+* 🧩 Pattern recognition
+* 💻 Machine learning
 
 ---
 
-## 🔬 Feature Extraction
+## 🧬 Gene Expression Example
 
-Eigenvector-based methods can transform many correlated variables into a smaller number of informative features.
+Gene-expression datasets may contain:
 
 ```text
-Original variables
+Thousands of genes
+       ↓
+Hundreds of samples
+       ↓
+High-dimensional dataset
+```
+
+PCA can transform these thousands of correlated variables into a smaller number of principal components.
+
+```text
+Original Variables
 X₁ X₂ X₃ X₄ X₅ ... Xₙ
           ↓
          PCA
           ↓
-       PC1 PC2 PC3
+      PC1 PC2 PC3 ...
 ```
 
----
-
-## 📉 Dimensionality Reduction
-
-Instead of analyzing hundreds or thousands of variables, we may retain only the most informative principal components.
-
-This can:
+This can help:
 
 * 📉 Reduce dimensionality
-* 🔍 Reveal hidden patterns
-* 🧩 Identify clusters
+* 🔍 Reveal biological patterns
+* 🧩 Identify sample clusters
 * ⚠️ Detect unusual samples
+* 📊 Visualize complex datasets
 * 💻 Reduce computational complexity
-* 📊 Improve visualization
-
----
-
-## 🧫 Systems Biology
-
-Eigenvalues and eigenvectors can also appear in:
-
-* 🧬 Gene regulatory network analysis
-* 🦠 Population models
-* 💊 Pharmacological modeling
-* 🧪 Dynamic biological systems
-* 📈 Stability analysis
 
 ---
 
 # 20. 🧒 Eigenvectors Explained Like You're Five
 
-Imagine you have a machine and lots of arrows.
+Imagine you have a machine and many arrows.
 
-🏭 **Matrix**
+### 🏭 Matrix
 
 > "I'm a machine that transforms arrows."
 
-🏹 **Vector**
+### 🏹 Vector
 
 > "I'm an arrow. I have a length and a direction."
 
-⭐ **Eigenvector**
+### ⭐ Eigenvector
 
-> "I'm a special arrow. When I enter the machine, I stay on the same special line."
+> "I'm a special arrow. When I enter the machine, I stay on the same line."
 
-🔢 **Eigenvalue**
+### 🔢 Eigenvalue
 
 > "I'm the number that tells you how much that special arrow gets stretched, shrunk, or flipped."
 
@@ -1529,12 +1591,12 @@ Not an eigenvector
 
 Eigenvector
 
-Before:  ↗
-          │
-          ▼
-      [ MATRIX ]
-          │
-          ▼
+Before:   ↗
+           │
+           ▼
+       [ MATRIX ]
+           │
+           ▼
 After:    ↗↗↗
 
 Same line ✅
@@ -1545,37 +1607,35 @@ Eigenvector ⭐
 
 # 21. 🧠 Key Takeaways
 
-| Concept                        | 💡 Meaning                                             |
-| ------------------------------ | ------------------------------------------------------ |
-| 🏹 **Vector**                  | Has magnitude and direction                            |
-| ⭐ **Eigenvector**              | Special direction preserved by a matrix transformation |
-| 🔢 **Eigenvalue**              | Scaling factor associated with an eigenvector          |
-| 📏 **Normalized eigenvector**  | Eigenvector with length 1                              |
-| ⟂ **Orthogonal vectors**       | Vectors with dot product 0                             |
-| ⭐ **Orthonormal vectors**      | Orthogonal vectors that also have unit length          |
-| 🧮 **Characteristic equation** | Equation used to calculate eigenvalues                 |
-| 📊 **PCA eigenvectors**        | Determine principal-component directions               |
-| 📈 **PCA eigenvalues**         | Measure variance captured by principal components      |
+| Concept                        | 💡 Meaning                                              |
+| ------------------------------ | ------------------------------------------------------- |
+| 🏹 **Vector**                  | Has magnitude and direction                             |
+| ⭐ **Eigenvector**              | Direction preserved under a matrix transformation       |
+| 🔢 **Eigenvalue**              | Scaling factor associated with an eigenvector           |
+| 📏 **Normalized eigenvector**  | Eigenvector with length 1                               |
+| ⟂ **Orthogonal vectors**       | Vectors whose dot product is zero                       |
+| ⭐ **Orthonormal vectors**      | Orthogonal unit vectors                                 |
+| 🧮 **Characteristic equation** | $\det(A-\lambda I)=0$                                   |
+| 📊 **PCA eigenvectors**        | Determine principal-component directions                |
+| 📈 **PCA eigenvalues**         | Determine variance associated with principal components |
 
 ---
 
 # 22. 🎯 Final Summary
 
-The fundamental equation is:
+The fundamental eigenvector equation is:
 
 $$
 \boxed{Av=\lambda v}
 $$
 
-It tells us that when matrix **A** acts on an eigenvector **v**, the resulting vector remains on the **same line** and is scaled by the eigenvalue **λ**.
-
-To calculate eigenvalues:
+To calculate the eigenvalues:
 
 $$
 \boxed{\det(A-\lambda I)=0}
 $$
 
-To calculate an eigenvector for a known eigenvalue:
+To find an eigenvector corresponding to an eigenvalue:
 
 $$
 \boxed{(A-\lambda I)v=0}
@@ -1587,7 +1647,7 @@ $$
 \boxed{\hat{v}=\frac{v}{|v|}}
 $$
 
-To test whether two vectors are orthogonal:
+To check orthogonality:
 
 $$
 \boxed{v_1^Tv_2=0}
@@ -1600,18 +1660,18 @@ $$
                    ↓
         Eigenvalues + Eigenvectors
                    ↓
-        Understand transformation
+       Understand transformation
                    ↓
-      Find important directions
+        Find important directions
                    ↓
-                 PCA
+                  PCA
                    ↓
-       Dimensionality Reduction
+        Dimensionality Reduction
                    ↓
-        Multivariate Analysis
+         Multivariate Analysis
                    ↓
-    Machine Learning & Data Science
+      Machine Learning & Data Science
 ```
 
 > 🌟 **Final takeaway:**
-> **Eigenvectors tell us the important directions. Eigenvalues tell us how important or strongly scaled those directions are. Together, they form the mathematical backbone of PCA and many multivariate statistical methods.**
+> **Eigenvectors identify special directions preserved by a matrix transformation. Eigenvalues describe how strongly those directions are scaled. In PCA, eigenvectors define the principal-component directions, while eigenvalues quantify the variance associated with those components.**
