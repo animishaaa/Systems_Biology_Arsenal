@@ -1,4 +1,4 @@
-# 🧮 MATRICES --- COMPLETE NOTES
+# 🧮 MATRICES 
 
 > **Core idea:** A matrix is more than a table of numbers. It can also
 > represent **data**, **instructions**, and **transformations**.
@@ -89,11 +89,11 @@ A matrix can represent:
 
 For example:
 
-  Patient     CRP   Weight   Age
-  --------- ----- -------- -----
-  1            40      107    40
-  2            30      104    32
-  3            35       66    55
+ | Patient | CRP | Weight | Age |
+|:-------:|----:|-------:|----:|
+| 1 | 40 | 107 | 40 |
+| 2 | 30 | 104 | 32 |
+| 3 | 35 | 66 | 55 |
 
 The numerical part can be represented as:
 
@@ -391,13 +391,13 @@ Aᵀ    = 3 × 2
 
 Original table:
 
-  Patient     CRP   Weight   Age
-  --------- ----- -------- -----
-  1            40      107    40
-  2            30      104    32
-  3            35       66    55
-  4           100       77    66
-  5           125       70    87
+| Patient | CRP | Weight | Age |
+|:-------:|----:|-------:|----:|
+| 1 | 40 | 107 | 40 |
+| 2 | 30 | 104 | 32 |
+| 3 | 35 | 66 | 55 |
+| 4 | 100 | 77 | 66 |
+| 5 | 125 | 70 | 87 |
 
 Numerical matrix:
 
@@ -558,6 +558,7 @@ $$
 7 & 8
 \end{bmatrix}
 $$
+
 
 ------------------------------------------------------------------------
 
