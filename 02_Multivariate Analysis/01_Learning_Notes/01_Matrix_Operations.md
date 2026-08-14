@@ -414,7 +414,7 @@ $$
 
 Here:
 
-> **Rows = patients**\
+> **Rows = patients**
 > **Columns = variables**
 
 After transposing:
@@ -542,7 +542,7 @@ is possible only when `A` and `B` have the same dimensions.
 
 Example:
 
-$$
+```math
 \begin{bmatrix}
 5 & 8 \\
 10 & 12
@@ -557,8 +557,7 @@ $$
 4 & 6 \\
 7 & 8
 \end{bmatrix}
-$$
-
+```
 
 ------------------------------------------------------------------------
 
@@ -655,45 +654,45 @@ The inner `3`s match.
 
 Let:
 
-$$
+```math
 A =
 \begin{bmatrix}
 1 & 2 \\
 3 & 4
 \end{bmatrix}
-$$
+```
 
 and:
 
-$$
+```math
 \mathbf{x} =
 \begin{bmatrix}
 5 \\
 6
 \end{bmatrix}
-$$
+```
 
 Then:
 
-$$
+```math
 A\mathbf{x}
 =
 \begin{bmatrix}
 1(5)+2(6) \\
 3(5)+4(6)
 \end{bmatrix}
-$$
+```
 
 Therefore:
 
-$$
+```math
 A\mathbf{x}
 =
 \begin{bmatrix}
 17 \\
 39
 \end{bmatrix}
-$$
+```
 
 ### 🧠 Interpretation
 
