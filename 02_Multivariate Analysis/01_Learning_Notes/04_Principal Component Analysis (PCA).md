@@ -18,19 +18,21 @@
 8. [Component Matrix](#8--component-matrix)
 9. [PCA Scores](#9--pca-scores)
 10. [Explained Variance](#10--explained-variance)
-11. [Choosing the Number of PCs](#11--choosing-the-number-of-pcs)
+11. [How Many Components Should Be Retained?](#11--how-many-components-should-be-retained)
 12. [Standardized PC Scores](#12--standardized-pc-scores)
 13. [Eigenvectors vs Loadings](#13--eigenvectors-vs-loadings)
 14. [Interpreting Principal Components](#14--interpreting-principal-components)
-15. [Rotation and Varimax](#15--rotation-and-varimax)
-16. [Rotated Components](#16--rotated-components)
+15. [Why Rotation Is Used](#15--why-rotation-is-used)
+16. [Varimax Rotation](#16--varimax-rotation)
 17. [Rotated Scores](#17--rotated-scores)
 18. [Post-PCA Analysis](#18--post-pca-analysis)
 19. [Common PCA Mistakes](#19--common-pca-mistakes)
-20. [The Complete PCA Story](#20--the-complete-pca-story)
-21. [Quick Cheat Sheet](#21--quick-cheat-sheet)
-22. [Applications of PCA](#22--applications-of-pca)
-23. [Recommended Video](#23--recommended-video)
+20. [Complete PCA Story](#20--complete-pca-story)
+21. [PCA Formula Sheet](#21--pca-formula-sheet)
+22. [Quick Cheat Sheet](#22--quick-cheat-sheet)
+23. [Applications of PCA](#23--applications-of-pca)
+24. [Final Mental Model](#24--final-mental-model)
+25. [Recommended Video](#25--recommended-video)
 
 ---
 
@@ -44,12 +46,13 @@ It converts a dataset containing many potentially correlated variables into a sm
 
 > **Principal Components (PCs)**
 
-The principal components:
+These principal components:
 
 * 📈 Capture as much variance as possible
 * 🔗 Are mutually uncorrelated
 * 🥇 Are ordered from most informative to least informative
-* 📉 Can be used to reduce dimensionality
+* 📉 Can reduce the dimensionality of a dataset
+* 🧩 Represent combinations of the original variables
 
 In simple words:
 
@@ -69,65 +72,83 @@ For example:
 | B      |  82 | 132 |     75 |    175 |
 | C      |  80 | 130 |     70 |    170 |
 
-These variables may be correlated.
+These variables may not be independent.
 
 For example:
 
 * 🩺 DBP may correlate with SBP
 * ⚖️ Weight may correlate with height
-* 📏 Weight and height may both represent a broader concept such as **body size**
+* 📏 Height and weight may both describe **body size**
+* ❤️ Blood-pressure variables may share common physiological variation
 
-Therefore, four measured variables may contain fewer than four truly independent dimensions of information.
+This means four measured variables may contain fewer than four genuinely independent dimensions of information.
 
 ---
 
-## 💡 PCA Intuition
+## 💡 What PCA Tries to Do
 
-Imagine a cloud of points:
-
-```text
-             •
-          •
-       •
-    •
- •
-```
-
-The original coordinate axes may not align with the direction where the data varies most.
-
-PCA finds new axes.
+Suppose we have a cloud of observations in two dimensions:
 
 ```text
-             •
-          •
-       •        ↗ PC1
-    •        ↗
- •        ↗
+Y
+↑
+
+|                  •
+|              •
+|          •
+|      •
+|  •
+|
++----------------------------→ X
 ```
 
-### 🥇 PC1
+The data clearly varies more strongly along a diagonal direction than along the original X or Y axes.
 
-The first principal component points in the direction containing the:
+PCA effectively rotates the coordinate system:
 
-> **Maximum possible variance**
+```text
+                     ↗ PC1
+                  •
+              •
+          •
+      •
+  •
 
-### 🥈 PC2
+            ↖ PC2
+```
+
+The new axes are:
+
+* **PC1** → direction of greatest variance
+* **PC2** → direction of the next greatest variance
+* **PC3** → next largest variance
+* and so on
+
+---
+
+## 🥇 First Principal Component
+
+The first principal component is chosen so that it captures the:
+
+> **Maximum possible variance in the data**
+
+---
+
+## 🥈 Second Principal Component
 
 The second principal component captures the:
 
-> **Next largest amount of variance**
+> **Maximum remaining variance while remaining orthogonal to PC1**
 
-while remaining orthogonal to PC1.
-
-The same idea continues for PC3, PC4, and so on.
+The same principle continues for PC3, PC4, etc.
 
 ---
 
 # 3. ⚖️ Why Standardization Matters
 
-PCA is based on **variance**.
+PCA is driven by **variance**.
 
-Variables measured using very different scales can therefore cause problems.
+That means variables with numerically larger variances can dominate the principal components.
 
 Consider:
 
@@ -137,9 +158,11 @@ Consider:
 | Height   |        170 cm |
 | Height   |        1.70 m |
 
-Height measured in centimeters and height measured in meters represent the same physical quantity.
+Height in centimeters and height in meters represent the same biological information.
 
-However, their numerical variances are very different.
+However, their numerical variances are completely different.
+
+Example:
 
 ```text
 Variance(weight)       ≈ 37.7
@@ -147,17 +170,13 @@ Variance(height in cm) ≈ 33
 Variance(height in m)  ≈ 0.003
 ```
 
-If PCA is applied directly to variables with incomparable scales:
-
-> ⚠️ Variables with large numerical variances can dominate the principal components.
+If PCA were performed directly on these differently scaled variables, variables with large numerical variance could dominate the result.
 
 ---
 
 ## 🔧 Z-Score Standardization
 
-A common solution is to standardize each variable.
-
-The Z-score formula is:
+A common solution is to standardize every variable using a Z-score.
 
 $$
 z = \frac{x-\mu}{\sigma}
@@ -168,7 +187,7 @@ where:
 * $x$ = original observation
 * $\mu$ = mean of the variable
 * $\sigma$ = standard deviation
-* $z$ = standardized observation
+* $z$ = standardized value
 
 After standardization:
 
@@ -178,7 +197,9 @@ Variance ≈ 1
 SD       ≈ 1
 ```
 
-Example:
+---
+
+## 📋 Example
 
 | Variable |  Mean |  SD |
 | -------- | ----: | --: |
@@ -187,32 +208,49 @@ Example:
 | Weight   |  69.6 | 6.6 |
 | Height   | 169.7 | 6.4 |
 
-Each observation is converted into a Z-score.
+Suppose a person's DBP is 78.
+
+Then:
+
+$$
+z_{\text{DBP}}
+==============
+
+\frac{78-80.2}{2.6}
+$$
+
+which produces the standardized DBP value.
 
 ---
 
-### 🧠 Important Note
+## 🧠 Important Note
 
-Standardization is especially useful when variables have:
+Standardization is strongly recommended when variables have:
 
 * Different units
 * Different numerical scales
 * Very different variances
 
-However, standardization is **not mathematically mandatory for every PCA problem**.
+However:
 
-PCA can also be performed directly on a covariance matrix when the original scale is scientifically meaningful.
+> ⚠️ **Standardization is not mathematically mandatory for every PCA problem.**
 
-> 📌 **Practical rule:** If the variables are measured in different units or have very different scales, standardize them before PCA unless there is a specific reason not to.
+PCA can also be performed directly on a covariance matrix when the original scales themselves are scientifically meaningful.
+
+### 📌 Practical Rule
+
+> If variables have different units or substantially different scales, standardize them before PCA unless there is a specific scientific reason not to.
 
 ---
 
 # 4. 🗺️ Complete PCA Workflow
 
-The complete PCA pipeline is:
+The complete PCA workflow can be represented as:
 
 ```text
 Raw Data
+   ↓
+Data Cleaning
    ↓
 Standardization
    ↓
@@ -232,31 +270,38 @@ Select Important PCs
    ↓
 Interpret Loadings
    ↓
-Visualize / Analyze
+Score Plot / Loading Plot / Biplot
    ↓
 Optional Rotation
+   ↓
+Downstream Analysis
 ```
 
-Step-by-step:
+---
 
-1. 🧹 Prepare the data
+## 🔢 PCA Step-by-Step
+
+1. 🧹 Prepare and clean the data
 2. ⚖️ Standardize variables when appropriate
-3. 🔗 Calculate covariance or correlation matrix
+3. 🔗 Compute covariance or correlation matrix
 4. 🧮 Calculate eigenvalues
 5. 🧭 Calculate eigenvectors
 6. 🧩 Construct principal components
 7. 📍 Calculate PCA scores
 8. 📊 Calculate explained variance
 9. ✂️ Decide how many PCs to retain
-10. 🔎 Interpret components
-11. 🔄 Optionally rotate retained components
-12. 🚀 Use the PCs in downstream analysis
+10. 🔎 Interpret component loadings
+11. 📉 Visualize the PCA
+12. 🔄 Optionally rotate retained components
+13. 🚀 Perform downstream analysis
 
 ---
 
 # 5. 🔗 Covariance and Correlation
 
 PCA needs information about how variables vary together.
+
+---
 
 ## Covariance
 
@@ -269,38 +314,49 @@ $$
 \frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{n-1}
 $$
 
-### Interpretation
+where:
+
+* $x_i$ = observation $i$ for variable $X$
+* $y_i$ = observation $i$ for variable $Y$
+* $\bar{x}$ = mean of $X$
+* $\bar{y}$ = mean of $Y$
+* $n$ = number of observations
+
+---
+
+## 🧠 Covariance Interpretation
 
 ```text
 Positive covariance
-X ↑ → Y tends to ↑
 
+X ↑
+Y ↑
+
+The variables tend to increase together.
+```
+
+```text
 Negative covariance
-X ↑ → Y tends to ↓
 
+X ↑
+Y ↓
+
+One variable tends to increase while the other decreases.
+```
+
+```text
 Covariance ≈ 0
-No strong linear co-movement
+
+No strong linear co-movement.
 ```
 
 ---
 
 ## 📦 Covariance Matrix
 
-For four variables:
+For several variables, all pairwise covariances are stored in a covariance matrix.
 
-```text
-          DBP   SBP   Weight   Height
-DBP        •     •      •        •
-SBP        •     •      •        •
-Weight     •     •      •        •
-Height     •     •      •        •
-```
-
-The diagonal contains the variance of each variable.
-
-The off-diagonal values contain covariance between pairs of variables.
-
-For example:
+For two variables:
 
 $$
 \mathbf{C}
@@ -312,7 +368,59 @@ $$
 \end{bmatrix}
 $$
 
-When all variables are standardized, PCA on standardized variables is equivalent to PCA using the **correlation matrix**.
+For our four variables, conceptually:
+
+```text
+          DBP   SBP   Weight   Height
+DBP        •     •      •        •
+SBP        •     •      •        •
+Weight     •     •      •        •
+Height     •     •      •        •
+```
+
+The diagonal contains:
+
+> **Variances**
+
+The off-diagonal elements contain:
+
+> **Covariances**
+
+---
+
+## 🔗 Correlation Matrix
+
+Correlation removes the scale effect.
+
+For variables $X$ and $Y$:
+
+$$
+r_{XY}
+======
+
+\frac{\operatorname{Cov}(X,Y)}
+{\sigma_X\sigma_Y}
+$$
+
+Correlation ranges between:
+
+$$
+-1 \le r \le 1
+$$
+
+Interpretation:
+
+```text
+r ≈ +1 → Strong positive relationship
+
+r ≈  0 → Weak/no linear relationship
+
+r ≈ -1 → Strong negative relationship
+```
+
+When all variables are standardized:
+
+> PCA using standardized data is equivalent to PCA using the **correlation matrix**.
 
 ---
 
@@ -326,7 +434,7 @@ $$
 \mathbf{C}
 $$
 
-PCA solves the eigenvalue equation:
+PCA solves:
 
 $$
 \mathbf{C}\mathbf{v}
@@ -347,9 +455,9 @@ where:
 
 An eigenvector tells us:
 
-> **Which direction should the new PCA axis point?**
+> **The direction of a principal component**
 
-Each eigenvector defines the direction of one principal component.
+Each eigenvector defines one new PCA axis.
 
 ---
 
@@ -357,7 +465,7 @@ Each eigenvector defines the direction of one principal component.
 
 An eigenvalue tells us:
 
-> **How much variance exists along that eigenvector direction?**
+> **How much variance is captured along that eigenvector direction**
 
 Therefore:
 
@@ -366,18 +474,62 @@ Eigenvector → Direction
 Eigenvalue  → Variance captured
 ```
 
-### 🧠 Memory Trick
+---
+
+## 🧠 Memory Trick
 
 > 🧭 **Vector = direction**
-> 📊 **Value = importance**
+
+> 📊 **Value = amount of variance**
+
+---
+
+## 📈 Ordering Components
+
+PCA orders eigenvalues from largest to smallest:
+
+$$
+\lambda_1
+\ge
+\lambda_2
+\ge
+\lambda_3
+\ge
+\cdots
+\ge
+\lambda_p
+$$
+
+Therefore:
+
+```text
+Largest eigenvalue
+       ↓
+      PC1
+
+Second-largest eigenvalue
+       ↓
+      PC2
+
+Third-largest eigenvalue
+       ↓
+      PC3
+```
 
 ---
 
 # 7. 🧩 Principal Components
 
-A principal component is a **linear combination of the original standardized variables**.
+A principal component is a **linear combination of the original variables**.
 
-For example:
+Suppose the standardized variables are:
+
+* $Z_{\text{DBP}}$
+* $Z_{\text{SBP}}$
+* $Z_{\text{Weight}}$
+* $Z_{\text{Height}}$
+
+Then:
 
 $$
 PC_1
@@ -392,7 +544,19 @@ w_3Z_{\text{Weight}}
 w_4Z_{\text{Height}}
 $$
 
-Suppose PC1 is:
+The coefficients:
+
+$$
+w_1,w_2,w_3,w_4
+$$
+
+come from the eigenvector corresponding to PC1.
+
+---
+
+## 📋 Example PC1
+
+Suppose:
 
 $$
 PC_1
@@ -404,11 +568,18 @@ PC_1
 +0.49Z_{\text{Height}}
 $$
 
-The coefficients come from the eigenvector corresponding to PC1.
+This means:
+
+| Variable | PC1 Weight |
+| -------- | ---------: |
+| DBP      |      -0.53 |
+| SBP      |      -0.50 |
+| Weight   |      +0.48 |
+| Height   |      +0.49 |
 
 ---
 
-## 🔍 Meaning of the Coefficients
+## 🔍 How Do We Read the Coefficients?
 
 ```text
 Large |coefficient|
@@ -430,22 +601,25 @@ Weight   +
 Height   +
 ```
 
-Therefore, increasing PC1 approximately corresponds to:
+So an increasing PC1 score roughly corresponds to:
 
 ```text
-↑ Body size
-↓ Blood-pressure variables
+↑ Weight
+↑ Height
+
+↓ DBP
+↓ SBP
 ```
 
-So PC1 represents a contrast between:
+This suggests that PC1 describes a contrast between:
 
-> 🩺 **Blood pressure** ↔ ⚖️ **Body size**
+> 🩺 **Blood Pressure** ↔ ⚖️ **Body Size**
 
 ---
 
 # 8. 🧱 Component Matrix
 
-Example eigenvector matrix:
+Suppose the PCA produces:
 
 | Variable |   PC1 |   PC2 |   PC3 |   PC4 |
 | -------- | ----: | ----: | ----: | ----: |
@@ -454,30 +628,60 @@ Example eigenvector matrix:
 | Weight   |  0.48 | -0.52 |  0.69 |  0.12 |
 | Height   |  0.49 | -0.50 | -0.69 | -0.18 |
 
-Each column is an eigenvector.
+Each **column** represents an eigenvector.
 
 ```text
-Column 1 → PC1 direction
-Column 2 → PC2 direction
-Column 3 → PC3 direction
-Column 4 → PC4 direction
+Column PC1 → Eigenvector 1
+
+Column PC2 → Eigenvector 2
+
+Column PC3 → Eigenvector 3
+
+Column PC4 → Eigenvector 4
 ```
 
-For a normalized eigenvector:
+---
+
+## Normalized Eigenvectors
+
+Eigenvectors are normally normalized so that:
 
 $$
-\sum_{j=1}^{p}v_{jk}^{2}=1
+\sum_{j=1}^{p}v_{jk}^{2}
+========================
+
+1
 $$
+
+For example, for PC1:
+
+$$
+(-0.53)^2
++
+(-0.50)^2
++
+(0.48)^2
++
+(0.49)^2
+\approx
+1
+$$
+
+The small difference is due to rounding.
 
 ---
 
 # 9. 📍 PCA Scores
 
-This distinction is extremely important:
+This is one of the most important PCA distinctions.
 
-> **Eigenvectors describe directions in variable space.**
+> **Eigenvectors describe the component directions.**
 
-> **Scores describe the observations projected onto those directions.**
+> **Scores describe where observations lie along those directions.**
+
+---
+
+## 🧍 Example Observation
 
 Suppose one person has standardized measurements:
 
@@ -488,7 +692,19 @@ Weight  = z₃
 Height  = z₄
 ```
 
-Then the PC1 score is:
+If PC1 is:
+
+$$
+PC_1
+====
+
+-0.53Z_{\text{DBP}}
+-0.50Z_{\text{SBP}}
++0.48Z_{\text{Weight}}
++0.49Z_{\text{Height}}
+$$
+
+then this person's PC1 score is:
 
 $$
 \operatorname{Score}_{PC1}
@@ -500,7 +716,16 @@ $$
 +0.49z_4
 $$
 
-In matrix notation:
+---
+
+## 🧮 Matrix Form
+
+If:
+
+* $\mathbf{Z}$ = standardized data matrix
+* $\mathbf{V}$ = matrix containing eigenvectors
+
+then the PCA scores are:
 
 $$
 \mathbf{T}
@@ -511,27 +736,25 @@ $$
 
 where:
 
-* $\mathbf{Z}$ = standardized data matrix
-* $\mathbf{V}$ = eigenvector matrix
 * $\mathbf{T}$ = PCA score matrix
 
 Conceptually:
 
 ```text
 Standardized Data
-       ×
-Eigenvectors
-       ↓
-PCA Scores
+        ×
+Eigenvector Matrix
+        ↓
+    PCA Scores
 ```
 
 ---
 
 ## 🧠 What Does a Score Mean?
 
-A score tells us:
+A PCA score tells us:
 
-> **Where an observation lies along a principal-component axis.**
+> **Where an observation lies along a particular principal-component axis.**
 
 Example:
 
@@ -541,13 +764,15 @@ Person B → PC1 =  0.3
 Person C → PC1 =  2.4
 ```
 
-These people occupy different positions along PC1.
+Person A and Person C are far apart along PC1.
+
+That means their profiles differ strongly according to the pattern represented by PC1.
 
 ---
 
 # 10. 📊 Explained Variance
 
-Suppose PCA produces:
+Suppose PCA produces the following eigenvalues:
 
 | PC  | Eigenvalue | % Variance | Cumulative % |
 | --- | ---------: | ---------: | -----------: |
@@ -556,7 +781,11 @@ Suppose PCA produces:
 | PC3 |       0.10 |       2.5% |        98.9% |
 | PC4 |       0.04 |       1.1% |         100% |
 
-The explained variance ratio for component $k$ is:
+---
+
+## Explained Variance Ratio
+
+For component $k$:
 
 $$
 \text{Explained Variance Ratio}_k
@@ -569,49 +798,91 @@ $$
 For standardized PCA with four variables:
 
 $$
-\sum_{j=1}^{4}\lambda_j \approx 4
+\sum_{j=1}^{4}\lambda_j
+\approx
+4
 $$
 
-subject to rounding.
+because each standardized variable has variance approximately 1.
 
 ---
 
-## 💡 Main Result
+## 📌 PC1
 
-```text
-PC1 = 60.2%
-PC2 = 36.2%
-────────────
-Total = 96.4%
-```
+$$
+\frac{2.41}{4}
+\approx
+0.6025
+$$
 
 Therefore:
 
-> 🔥 **PC1 + PC2 retain approximately 96.4% of the total standardized variance.**
+$$
+PC1
+\approx
+60.2%
+$$
 
-So PCA reduces:
+---
+
+## 📌 PC2
+
+$$
+\frac{1.45}{4}
+\approx
+0.3625
+$$
+
+Therefore:
+
+$$
+PC2
+\approx
+36.2%
+$$
+
+---
+
+## 🔥 PC1 + PC2
+
+$$
+60.2%
++
+36.2%
+=====
+
+96.4%
+$$
+
+Therefore:
+
+> **Two dimensions preserve approximately 96.4% of the variance originally contained in four standardized variables.**
+
+This is the essence of dimensionality reduction.
 
 ```text
-4 variables
-     ↓
-    PCA
-     ↓
-2 principal components
-     ↓
-≈ 96.4% variance retained
+4 Original Variables
+        ↓
+       PCA
+        ↓
+2 Principal Components
+        ↓
+≈ 96.4% Variance Retained
 ```
 
 ---
 
-# 11. ✂️ Choosing the Number of PCs
+# 11. ✂️ How Many Components Should Be Retained?
 
-Several methods can be used.
+There is no single universal rule.
+
+Several criteria are commonly used together.
 
 ---
 
 ## 1️⃣ Cumulative Explained Variance
 
-A common heuristic is to retain enough components to explain approximately:
+A common heuristic is to retain enough PCs to explain approximately:
 
 ```text
 80%
@@ -619,39 +890,46 @@ A common heuristic is to retain enough components to explain approximately:
 95%
 ```
 
-of the variance.
+of the total variance.
 
 Here:
 
 $$
-60.2% + 36.2% = 96.4%
+PC1 + PC2
+=========
+
+96.4%
 $$
 
 Therefore:
 
-> ✅ PC1 and PC2 are sufficient using this criterion.
+> ✅ PC1 and PC2 would be retained.
 
 ---
 
 ## 2️⃣ Kaiser Criterion
 
-For PCA based on standardized variables or a correlation matrix:
+For PCA performed on a correlation matrix or standardized variables:
 
-> Retain components with eigenvalues greater than 1.
+> **Retain components with eigenvalues greater than 1.**
 
-Why?
+Why 1?
 
-Each standardized original variable contributes approximately one unit of variance.
+Each standardized original variable contributes approximately:
 
-Therefore, a component with:
+$$
+\operatorname{Var}(Z)=1
+$$
+
+So a component with:
 
 $$
 \lambda > 1
 $$
 
-explains more variance than one average standardized original variable.
+captures more variance than one average standardized original variable.
 
-Example:
+Here:
 
 ```text
 PC1 = 2.41 ✅
@@ -660,17 +938,23 @@ PC3 = 0.10 ❌
 PC4 = 0.04 ❌
 ```
 
-So:
+Therefore:
 
-> **Retain PC1 and PC2**
+> ✅ Retain PC1 and PC2.
 
-⚠️ The Kaiser rule is a heuristic, not a universal law.
+### ⚠️ Important
+
+The Kaiser criterion is a **heuristic**, not a universal rule.
 
 ---
 
 ## 3️⃣ Scree Plot
 
-A scree plot displays eigenvalue against component number.
+A scree plot shows:
+
+> **Eigenvalue vs Principal Component Number**
+
+Example:
 
 ```text
 Eigenvalue
@@ -679,21 +963,21 @@ Eigenvalue
     │
 2.0 │
     │
-1.5 │      ●
+1.5 │       ●
     │
 1.0 │
     │
 0.5 │
-    │             ●    ●
-0.0 └─────────────────────
-       PC1  PC2  PC3  PC4
+    │                ●    ●
+0.0 └────────────────────────
+       PC1   PC2   PC3   PC4
 ```
 
 Look for the:
 
-> 🦵 **Elbow**
+> 🦵 **Elbow Point**
 
-Here, the sharp drop occurs after PC2.
+Here there is a large drop after PC2.
 
 Therefore:
 
@@ -701,23 +985,38 @@ Therefore:
 
 ---
 
-## 🔬 More Advanced Methods
+## 4️⃣ Parallel Analysis
 
-More rigorous approaches include:
+A more rigorous approach is **parallel analysis**.
 
+It compares observed eigenvalues with eigenvalues obtained from random datasets.
+
+Keep a component only when its observed eigenvalue is larger than expected from random noise.
+
+---
+
+## 5️⃣ Domain Knowledge
+
+Statistical rules should not replace scientific reasoning.
+
+A component may explain less variance but still represent an important biological mechanism.
+
+Therefore, component retention should consider:
+
+* Explained variance
+* Scree plot
 * Parallel analysis
-* Cross-validation
-* Reconstruction error
-* Downstream predictive performance
-* Domain knowledge
+* Interpretability
+* Biological relevance
+* Downstream performance
 
 ---
 
 # 12. 📐 Standardized PC Scores
 
-Principal-component scores can also be standardized.
+PC scores themselves may have different variances.
 
-For component $k$:
+A PC score can be standardized:
 
 $$
 Z_{PC_k}
@@ -727,45 +1026,46 @@ Z_{PC_k}
 {SD(PC_k)}
 $$
 
-This gives approximately:
+After standardization:
 
 ```text
-Mean = 0
-SD   = 1
+Mean ≈ 0
+SD   ≈ 1
 ```
 
-This may be useful when PC scores are later used in analyses requiring comparable scales.
+This can be useful if PC scores will later be combined or compared on equal scales.
 
-> ⚠️ Standardizing PC scores is **not a mandatory step of PCA itself**.
+> ⚠️ Standardizing PCA scores is **not a mandatory PCA step**.
 
 ---
 
 # 13. 🧲 Eigenvectors vs Loadings
 
-This is one of the most commonly confused parts of PCA.
+This is one of the most commonly confused concepts in PCA.
 
 ---
 
 ## 🧭 Eigenvectors
 
-Eigenvectors define the component directions.
+Eigenvectors define the directions of the principal components.
 
-For normalized eigenvectors:
-
-$$
-\sum_j v_{jk}^{2}=1
-$$
-
-Example:
+Example PC1 eigenvector:
 
 ```text
-PC1 eigenvector
-
 DBP      -0.53
 SBP      -0.50
-Weight    0.48
-Height    0.49
+Weight   +0.48
+Height   +0.49
 ```
+
+The normalized eigenvector satisfies:
+
+$$
+\sum_j v_{jk}^{2}
+=================
+
+1
+$$
 
 ---
 
@@ -782,31 +1082,33 @@ $$
 
 where:
 
-* $l_{jk}$ = loading of variable $j$ on component $k$
+* $l_{jk}$ = loading for variable $j$ on component $k$
 * $v_{jk}$ = eigenvector coefficient
-* $\lambda_k$ = eigenvalue of component $k$
+* $\lambda_k$ = eigenvalue
 
-For standardized variables, these loadings can be interpreted as correlations between the original variables and PC scores.
+For standardized variables, these loadings can be interpreted as correlations between the original variables and the PC scores.
 
-Example:
+---
+
+## 📋 Example PC1 Loadings
 
 | Variable | PC1 Loading |
 | -------- | ----------: |
 | DBP      |       -0.82 |
 | SBP      |       -0.77 |
-| Weight   |        0.75 |
-| Height   |        0.77 |
+| Weight   |       +0.75 |
+| Height   |       +0.77 |
 
 Interpretation:
 
 ```text
 |Loading| close to 1
         ↓
-Strong relationship
+Strong relationship with PC
 
 |Loading| close to 0
         ↓
-Weak relationship
+Weak relationship with PC
 ```
 
 ---
@@ -814,17 +1116,28 @@ Weak relationship
 ## 🧠 Remember
 
 ```text
-Eigenvalue  → How much variance?
-Eigenvector → Which direction?
-Score       → Where is each observation?
-Loading     → Which variables strongly define a PC?
+Eigenvalue
+    ↓
+How much variance?
+
+Eigenvector
+    ↓
+Which direction?
+
+Score
+    ↓
+Where is each observation?
+
+Loading
+    ↓
+Which variables define the component?
 ```
 
 ---
 
 # 14. 🔎 Interpreting Principal Components
 
-Suppose PC1 loadings are:
+Suppose the PC1 loadings are:
 
 ```text
 DBP      -0.82
@@ -833,26 +1146,63 @@ Weight   +0.75
 Height   +0.77
 ```
 
-Then PC1 represents a contrast between:
+We can see two groups:
 
 ```text
-Blood pressure  ←→  Body size
+Negative side:
+
+DBP
+SBP
+
+Positive side:
+
+Weight
+Height
 ```
 
-A person with a high PC1 score may have relatively:
+Therefore, PC1 can be interpreted as:
+
+> 🩺 **Blood Pressure vs Body Size**
+
+---
+
+## 📍 Interpreting PC1 Scores
+
+A high PC1 score might represent:
 
 ```text
-Higher Weight / Height
-Lower DBP / SBP
+Higher Weight
+Higher Height
+Lower DBP
+Lower SBP
 ```
 
-while a low PC1 score indicates the opposite pattern.
+A low PC1 score might represent:
+
+```text
+Lower Weight
+Lower Height
+Higher DBP
+Higher SBP
+```
+
+---
+
+## PC2 Interpretation
+
+Suppose all four variables have loadings in approximately the same direction on PC2.
+
+Then PC2 may represent:
+
+> **Overall magnitude/common variation**
+
+The exact biological interpretation depends on the actual loading values and the scientific context.
 
 ---
 
 ## ➕➖ Important: Eigenvector Signs Are Arbitrary
 
-Suppose:
+Suppose an eigenvector is:
 
 $$
 \mathbf{v}
@@ -880,21 +1230,25 @@ $$
 \end{bmatrix}
 $$
 
-is an equally valid eigenvector.
+is equally valid.
+
+Both describe the same PCA axis.
 
 Therefore:
 
-> ⚠️ The absolute positive/negative orientation of a PC has no intrinsic meaning.
+> ⚠️ Do not assign intrinsic biological meaning to whether a component happens to be positive or negative.
 
-What matters is the **relative relationship among variables**.
+Focus on:
+
+> **Relative relationships among variables.**
 
 ---
 
-# 15. 🔄 Rotation and Varimax
+# 15. 🔄 Why Rotation Is Used
 
-Sometimes retained principal components are mathematically correct but difficult to interpret.
+Sometimes PCA components explain variance well but are difficult to interpret.
 
-Example:
+Consider:
 
 | Variable |   PC1 |   PC2 |
 | -------- | ----: | ----: |
@@ -903,41 +1257,71 @@ Example:
 | Weight   |  0.48 | -0.52 |
 | Height   |  0.49 | -0.50 |
 
-Many variables contribute substantially to more than one component.
+Several variables contribute substantially to both components.
 
-This is called **cross-loading**.
+This is called:
+
+> **Cross-loading**
+
+Cross-loading makes component interpretation less clear.
 
 ---
 
-## 🔄 Varimax Rotation
+## 🎯 Goal of Rotation
 
-Varimax is an **orthogonal rotation**.
+Rotation tries to produce a simpler structure.
 
-Its goal is to create a simpler structure where variables tend to have:
+Ideally:
 
 ```text
-Large loading on one component
-        +
-Small loading on other components
+Variable A → High loading on Component 1
+             Low loading on Component 2
+
+Variable B → Low loading on Component 1
+             High loading on Component 2
 ```
 
-while keeping the rotated components orthogonal.
+This can make the latent structure easier to interpret.
+
+---
+
+# 16. 🔄 Varimax Rotation
+
+**Varimax** is an orthogonal rotation method.
+
+Its goal is to:
+
+* Maximize large loadings
+* Minimize small/intermediate loadings
+* Produce simpler components
+* Keep rotated components orthogonal
 
 Conceptually:
 
 ```text
-Original retained PCA axes
-           ↓
-        Rotate
-           ↓
-Simpler interpretable axes
+Original Components
+        ↓
+     Rotation
+        ↓
+Cleaner Loading Structure
 ```
 
 ---
 
-# 16. 🎯 Rotated Components
+## 📋 Before Rotation
 
-Example after Varimax rotation:
+| Variable |   PC1 |   PC2 |
+| -------- | ----: | ----: |
+| DBP      | -0.53 | -0.46 |
+| SBP      | -0.50 | -0.52 |
+| Weight   |  0.48 | -0.52 |
+| Height   |  0.49 | -0.50 |
+
+Interpretation is not immediately clean.
+
+---
+
+## 📋 After Varimax Rotation
 
 | Variable |       RC1 |       RC2 |
 | -------- | --------: | --------: |
@@ -946,11 +1330,13 @@ Example after Varimax rotation:
 | Weight   |      0.09 | **-0.97** |
 | Height   |      0.12 | **-0.97** |
 
-Now interpretation is much clearer.
+Now the interpretation is much clearer.
 
-### 🩺 RC1
+---
 
-Strong loadings:
+## 🩺 RC1
+
+High absolute loadings:
 
 ```text
 DBP
@@ -961,9 +1347,11 @@ Therefore:
 
 > **RC1 ≈ Blood Pressure Component**
 
-### ⚖️ RC2
+---
 
-Strong loadings:
+## ⚖️ RC2
+
+High absolute loadings:
 
 ```text
 Weight
@@ -976,13 +1364,40 @@ Therefore:
 
 ---
 
+## 🧠 Important Rotation Concept
+
+Rotation does not create new information.
+
+It changes the orientation of the retained component axes.
+
+```text
+Before Rotation
+
+PC1 + PC2
+      ↓
+Same 2D subspace
+      ↓
+RC1 + RC2
+
+After Rotation
+```
+
+The retained subspace remains the same.
+
+---
+
 # 17. 🔃 Rotated Scores
 
-If $\mathbf{T}$ contains the retained PCA scores and $\mathbf{R}$ is the rotation matrix:
+Suppose:
+
+* $\mathbf{T}$ = original retained PCA score matrix
+* $\mathbf{R}$ = rotation matrix
+
+Then, under the corresponding orthogonal rotation convention:
 
 $$
-\mathbf{T}_{rotated}
-====================
+\mathbf{T}_{\text{rotated}}
+===========================
 
 \mathbf{T}\mathbf{R}
 $$
@@ -990,203 +1405,304 @@ $$
 Conceptually:
 
 ```text
-Original PCA Scores
+Original PC Scores
         ×
 Rotation Matrix
         ↓
 Rotated Scores
 ```
 
-Example:
+---
 
-| Component | Variance |
-| --------- | -------: |
-| RC1       |     1.94 |
-| RC2       |     1.92 |
-| **Total** | **3.86** |
+## 📊 Variance Before Rotation
 
-Before rotation:
+Suppose:
 
-$$
-2.41 + 1.45 = 3.86
-$$
+```text
+PC1 variance = 2.41
+PC2 variance = 1.45
+```
 
-After rotation:
+Total:
 
 $$
-1.94 + 1.92 = 3.86
+2.41+1.45
+=========
+
+3.86
+$$
+
+---
+
+## 📊 Variance After Rotation
+
+Suppose:
+
+```text
+RC1 variance = 1.94
+RC2 variance = 1.92
+```
+
+Then:
+
+$$
+1.94+1.92
+=========
+
+3.86
 $$
 
 Therefore:
 
 > 🔒 **The total variance represented by the retained orthogonal subspace is preserved.**
 
-However, the variance is redistributed between the rotated components.
+However:
+
+> The variance may be redistributed among the rotated components.
 
 ---
 
 # 18. 🚀 Post-PCA Analysis
 
-PCA is often only the beginning.
+PCA is often not the final analysis.
 
-The resulting PCA scores can be used in further analyses.
+The resulting scores and loadings can be used for further investigation.
 
 ---
 
 ## 📊 1. Score Plot
 
-Plot PC1 against PC2:
+A common PCA plot is:
+
+> **PC1 Score vs PC2 Score**
+
+Example:
 
 ```text
 PC2
  ↑
+
  │        ● ●
  │   ●
- │                ● ●
+ │                    ●
+ │                ●
  │
  │ ●
- └────────────────────→ PC1
+ └────────────────────────→ PC1
 ```
 
-Useful for identifying:
+A score plot can reveal:
 
 * Clusters
 * Outliers
-* Trends
 * Group separation
-* Similar observations
+* Trends
+* Similar samples
+* Batch effects
 
 ---
 
 ## 🧲 2. Loading Plot
 
-A loading plot helps answer:
+A loading plot shows how variables contribute to PCs.
 
-> Which original variables are driving PC1 and PC2?
+It helps answer:
+
+> **Which variables are responsible for the observed sample patterns?**
 
 ---
 
 ## 🎯 3. Biplot
 
-A biplot combines:
+A PCA biplot combines:
 
 ```text
-Observation scores
-        +
-Variable loadings
+Sample Scores
+      +
+Variable Loadings
 ```
 
-It simultaneously shows:
+into one visualization.
 
-* Where observations are located
-* Which variables explain those locations
+This helps answer two questions simultaneously:
+
+1. Where are the observations?
+2. Which variables explain those positions?
 
 ---
 
-## 🤖 4. Machine Learning
+## 🔎 Interpreting Vectors in a Biplot
 
-Instead of using:
-
-```text
-X1, X2, X3, ..., X100
-```
-
-we may use:
+Conceptually:
 
 ```text
-PC1, PC2, ..., PC10
+Long vector
+    ↓
+Strong contribution to displayed PCs
+
+Short vector
+    ↓
+Weak contribution to displayed PCs
 ```
 
-Potential benefits:
+Angles between variable vectors also provide information about correlation.
+
+```text
+Small angle
+    ↓
+Positive correlation
+
+≈ 90°
+    ↓
+Weak correlation
+
+≈ 180°
+    ↓
+Negative correlation
+```
+
+---
+
+## 🤖 4. PCA Before Machine Learning
+
+Instead of training a model using:
+
+```text
+X1
+X2
+X3
+...
+X100
+```
+
+we might use:
+
+```text
+PC1
+PC2
+...
+PC10
+```
+
+Potential benefits include:
 
 * Reduced dimensionality
 * Reduced multicollinearity
-* Faster model training
+* Lower computational cost
 * Noise reduction
 * Easier visualization
 
-> ⚠️ PCA does not automatically improve prediction because PCA maximizes variance in $X$, not predictive information about a target $y$.
+---
+
+## ⚠️ Important Prediction Warning
+
+PCA does not use the target variable $y$.
+
+It only analyzes variation in the predictor matrix $\mathbf{X}$.
+
+Therefore:
+
+> **High variance does not automatically mean high predictive importance.**
+
+A low-variance feature could still be highly predictive of the target.
 
 ---
 
-## 🧩 5. Clustering
+## 🧩 5. PCA Before Clustering
 
-PCA is commonly used before:
-
-* K-means
-* Hierarchical clustering
-* Gaussian mixture models
-
-Example:
+A common workflow is:
 
 ```text
 100 correlated variables
           ↓
          PCA
           ↓
-10 principal components
+10 important PCs
           ↓
       Clustering
           ↓
-Groups / Patterns
+ Biological Groups
 ```
+
+PCA can reduce noise and redundant dimensions before clustering.
 
 ---
 
 # 19. ⚠️ Common PCA Mistakes
 
-## ❌ Mistake 1: Ignoring Scale
+## ❌ Mistake 1: Ignoring Variable Scale
 
-Variables measured in very different units can dominate covariance-based PCA.
+If variables have very different units, covariance-based PCA may be dominated by variables with large numerical variance.
 
 ### ✅ Solution
 
-Standardize when appropriate.
+Standardize when scientifically appropriate.
 
 ---
 
 ## ❌ Mistake 2: Thinking PC1 Is an Original Variable
 
-PC1 is not one original feature.
+PC1 is not one original variable.
 
 It is a:
 
-> **Linear combination of the original variables**
+> **Weighted linear combination of the original variables**
 
 ---
 
 ## ❌ Mistake 3: Confusing Scores and Loadings
 
+Remember:
+
 ```text
-Scores   → Observations
-Loadings → Variables
+Scores
+  ↓
+Observations
+
+Loadings
+  ↓
+Variables
 ```
 
 ---
 
-## ❌ Mistake 4: Treating Signs as Absolute
+## ❌ Mistake 4: Confusing Eigenvalues and Eigenvectors
 
-The signs of eigenvectors may be reversed without changing the PCA solution.
+```text
+Eigenvalue
+    ↓
+Variance captured
 
----
-
-## ❌ Mistake 5: Assuming High Variance Means High Predictive Value
-
-PCA does not use a target variable.
-
-It only examines variation in the predictor matrix $\mathbf{X}$.
-
-Therefore:
-
-> High variance does not automatically mean high predictive importance.
+Eigenvector
+    ↓
+Direction
+```
 
 ---
 
-## ❌ Mistake 6: Assuming PCA Finds Causality
+## ❌ Mistake 5: Treating Eigenvector Signs as Absolute
 
-PCA identifies variance and correlation structure.
+The sign may be reversed without changing the underlying PCA solution.
 
-It does **not** establish:
+---
+
+## ❌ Mistake 6: Assuming High Variance Means High Predictive Value
+
+PCA is unsupervised.
+
+It does not know the target variable.
+
+---
+
+## ❌ Mistake 7: Thinking PCA Finds Causality
+
+PCA identifies:
+
+* Variance structure
+* Correlation structure
+* Low-dimensional patterns
+
+It does **not** prove:
 
 ```text
 X causes Y
@@ -1194,28 +1710,38 @@ X causes Y
 
 ---
 
-## ❌ Mistake 7: Blindly Using the 80–90% Rule
+## ❌ Mistake 8: Automatically Using the 80–90% Rule
 
-Explained variance should be considered together with:
+The explained-variance threshold is only a heuristic.
 
-* Domain knowledge
+Also consider:
+
 * Scree plot
 * Parallel analysis
+* Domain knowledge
 * Interpretability
 * Validation
-* Downstream performance
+* Downstream model performance
 
 ---
 
-## ❌ Mistake 8: Thinking Rotation Creates Information
+## ❌ Mistake 9: Thinking Rotation Adds Information
 
-Rotation can improve interpretability.
+Rotation improves interpretability.
 
 It does **not** create additional information.
 
 ---
 
-# 20. 🧠 The Complete PCA Story
+## ❌ Mistake 10: Interpreting PCs Without Looking at Loadings
+
+A PC number alone has no biological meaning.
+
+You must inspect the variables contributing strongly to that component.
+
+---
+
+# 20. 🧠 Complete PCA Story
 
 Suppose we start with:
 
@@ -1230,17 +1756,24 @@ Height
 
 ## Step 1️⃣ — Standardize
 
+For every measurement:
+
 $$
-z = \frac{x-\mu}{\sigma}
+z
+=
+
+\frac{x-\mu}{\sigma}
 $$
 
 Why?
 
-> Put variables with different units or scales onto comparable scales.
+> Put variables onto comparable numerical scales.
 
 ---
 
-## Step 2️⃣ — Build the Covariance/Correlation Matrix
+## Step 2️⃣ — Calculate Covariance or Correlation Matrix
+
+Construct:
 
 $$
 \mathbf{C}
@@ -1248,13 +1781,11 @@ $$
 
 Why?
 
-> Measure how variables vary together.
+> Describe how variables vary together.
 
 ---
 
-## Step 3️⃣ — Eigenvalue Decomposition
-
-Solve:
+## Step 3️⃣ — Solve the Eigenvalue Problem
 
 $$
 \mathbf{C}\mathbf{v}
@@ -1266,28 +1797,61 @@ $$
 This gives:
 
 ```text
-Eigenvectors → Directions
-Eigenvalues  → Variance along those directions
+Eigenvector
+    ↓
+Direction of PC
+
+Eigenvalue
+    ↓
+Variance captured
 ```
 
 ---
 
-## Step 4️⃣ — Construct Principal Components
+## Step 4️⃣ — Order Components
+
+Order components by eigenvalue:
 
 $$
-PC_k
-====
-
-\mathbf{Z}\mathbf{v}_k
+\lambda_1
+\ge
+\lambda_2
+\ge
+\cdots
+\ge
+\lambda_p
 $$
 
-Each PC is a weighted combination of the original standardized variables.
+Therefore:
+
+```text
+PC1 captures most variance
+PC2 captures second-most
+PC3 captures third-most
+...
+```
 
 ---
 
-## Step 5️⃣ — Calculate Scores
+## Step 5️⃣ — Construct Principal Components
 
-For all observations:
+Example:
+
+$$
+PC_1
+====
+
+-0.53Z_{\text{DBP}}
+-0.50Z_{\text{SBP}}
++0.48Z_{\text{Weight}}
++0.49Z_{\text{Height}}
+$$
+
+---
+
+## Step 6️⃣ — Project Observations
+
+Calculate:
 
 $$
 \mathbf{T}
@@ -1296,18 +1860,18 @@ $$
 \mathbf{Z}\mathbf{V}
 $$
 
-Now every observation receives:
+Each sample receives:
 
 ```text
-PC1 score
-PC2 score
-PC3 score
+PC1 Score
+PC2 Score
+PC3 Score
 ...
 ```
 
 ---
 
-## Step 6️⃣ — Rank Components
+## Step 7️⃣ — Calculate Explained Variance
 
 Example:
 
@@ -1320,10 +1884,13 @@ PC4 →  1.1%
 
 ---
 
-## Step 7️⃣ — Reduce Dimensionality
+## Step 8️⃣ — Reduce Dimensionality
 
 $$
-PC1 + PC2 = 96.4%
+PC1+PC2
+=======
+
+96.4%
 $$
 
 Therefore:
@@ -1331,28 +1898,33 @@ Therefore:
 ```text
 4 dimensions
       ↓
+     PCA
+      ↓
 2 dimensions
 ```
 
-while retaining approximately 96.4% of the variance.
+while retaining approximately 96.4% of total standardized variance.
 
 ---
 
-## Step 8️⃣ — Interpret
+## Step 9️⃣ — Interpret Components
 
 Inspect:
 
 ```text
 Eigenvectors
 Loadings
-Score plots
-Loading plots
-Biplots
+Scores
+Score Plot
+Loading Plot
+Biplot
 ```
 
 ---
 
-## Step 9️⃣ — Optional Rotation
+## Step 🔟 — Optional Rotation
+
+If the retained PCs are difficult to interpret:
 
 ```text
 PC1 + PC2
@@ -1362,7 +1934,7 @@ PC1 + PC2
 RC1 + RC2
 ```
 
-Possible interpretation:
+Example interpretation:
 
 ```text
 RC1 → Blood Pressure
@@ -1371,9 +1943,9 @@ RC2 → Body Size
 
 ---
 
-## Step 🔟 — Downstream Analysis
+## Step 1️⃣1️⃣ — Downstream Analysis
 
-Use PCA scores for:
+Use PCA for:
 
 * 📊 Visualization
 * 🧩 Clustering
@@ -1381,48 +1953,203 @@ Use PCA scores for:
 * 🔎 Outlier detection
 * 🧬 Omics analysis
 * 📉 Dimensionality reduction
+* 🏭 Process monitoring
 
 ---
 
-# 21. 📝 Quick Cheat Sheet
+# 21. 🧮 PCA Formula Sheet
 
-| Concept                    | Meaning                                              |
-| -------------------------- | ---------------------------------------------------- |
-| 📊 **PCA**                 | Dimensionality-reduction technique                   |
-| ⚖️ **Standardization**     | Places variables on comparable scales                |
-| 🔗 **Covariance**          | How two variables vary together                      |
-| 🧭 **Eigenvector**         | Direction of a PC                                    |
-| 📈 **Eigenvalue**          | Variance captured by a PC                            |
-| 🧩 **Principal Component** | Weighted linear combination of variables             |
-| 📍 **Score**               | Position of an observation along a PC                |
-| 🧲 **Loading**             | Association between an original variable and a PC    |
-| 📉 **Explained Variance**  | Fraction of total variance captured                  |
-| 🦵 **Scree Plot**          | Helps determine number of PCs                        |
-| 1️⃣ **Kaiser Criterion**   | Retain eigenvalues greater than 1 in correlation PCA |
-| 🔄 **Varimax**             | Orthogonal rotation for easier interpretation        |
-| 🎯 **Biplot**              | Displays observations and variables together         |
+## 1. Standardization
+
+$$
+z
+=
+
+\frac{x-\mu}{\sigma}
+$$
 
 ---
 
-# 22. 🌍 Applications of PCA
+## 2. Sample Covariance
+
+$$
+\operatorname{Cov}(X,Y)
+=======================
+
+\frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}
+{n-1}
+$$
+
+---
+
+## 3. Correlation
+
+$$
+r_{XY}
+======
+
+\frac{\operatorname{Cov}(X,Y)}
+{\sigma_X\sigma_Y}
+$$
+
+---
+
+## 4. Eigenvalue Equation
+
+$$
+\mathbf{C}\mathbf{v}
+====================
+
+\lambda\mathbf{v}
+$$
+
+---
+
+## 5. Principal Component
+
+$$
+PC_k
+====
+
+\mathbf{Z}\mathbf{v}_k
+$$
+
+---
+
+## 6. PCA Score Matrix
+
+$$
+\mathbf{T}
+==========
+
+\mathbf{Z}\mathbf{V}
+$$
+
+---
+
+## 7. Explained Variance Ratio
+
+$$
+EVR_k
+=====
+
+\frac{\lambda_k}
+{\sum_j\lambda_j}
+$$
+
+---
+
+## 8. Cumulative Explained Variance
+
+$$
+CEV_m
+=====
+
+\frac{\sum_{k=1}^{m}\lambda_k}
+{\sum_{j=1}^{p}\lambda_j}
+$$
+
+---
+
+## 9. Loading
+
+Under a common standardized-PCA convention:
+
+$$
+l_{jk}
+======
+
+v_{jk}\sqrt{\lambda_k}
+$$
+
+---
+
+## 10. Standardized PC Score
+
+$$
+Z_{PC_k}
+========
+
+\frac{PC_k-\overline{PC_k}}
+{SD(PC_k)}
+$$
+
+---
+
+## 11. Orthogonal Rotated Scores
+
+$$
+\mathbf{T}_{\text{rotated}}
+===========================
+
+\mathbf{T}\mathbf{R}
+$$
+
+---
+
+# 22. 📝 Quick Cheat Sheet
+
+| Concept                | Meaning                                         |
+| ---------------------- | ----------------------------------------------- |
+| 📊 PCA                 | Dimensionality-reduction technique              |
+| ⚖️ Standardization     | Places variables on comparable scales           |
+| 🔗 Covariance          | Describes how variables vary together           |
+| 🔗 Correlation         | Standardized linear relationship                |
+| 🧭 Eigenvector         | Direction of a principal component              |
+| 📈 Eigenvalue          | Variance captured by a principal component      |
+| 🧩 Principal Component | Weighted combination of original variables      |
+| 📍 Score               | Position of an observation along a PC           |
+| 🧲 Loading             | Strength of a variable's relationship with a PC |
+| 📉 Explained Variance  | Fraction of total variance captured             |
+| 📈 Cumulative Variance | Total variance explained by first $k$ PCs       |
+| 🦵 Scree Plot          | Helps determine number of PCs                   |
+| 1️⃣ Kaiser Criterion   | Often retain $\lambda>1$ for correlation PCA    |
+| 🔄 Varimax             | Orthogonal rotation for interpretability        |
+| 🎯 Score Plot          | Shows observations in PCA space                 |
+| 🧲 Loading Plot        | Shows variable contributions                    |
+| 🎯 Biplot              | Shows observations and variables together       |
+
+---
+
+# 23. 🌍 Applications of PCA
 
 ## 🧬 Biology and Omics
 
-```text
-Thousands of genes
-        ↓
-       PCA
-        ↓
-Few major expression patterns
-```
+PCA is widely used in:
 
-Applications include:
-
-* Gene expression
+* Gene-expression analysis
+* RNA-seq
 * Proteomics
 * Metabolomics
 * Population genetics
-* Single-cell data exploration
+* Microbiome studies
+* Single-cell analysis
+
+Example:
+
+```text
+20,000 Genes
+     ↓
+    PCA
+     ↓
+PC1 + PC2
+     ↓
+Major Biological Patterns
+```
+
+---
+
+## 🧫 Batch-Effect Detection
+
+In omics data, PCA can reveal whether samples separate according to:
+
+```text
+Biological Condition
+        or
+Technical Batch
+```
+
+If samples cluster by sequencing batch rather than biology, that may indicate a technical artifact.
 
 ---
 
@@ -1435,60 +2162,103 @@ PCA can be used for:
 * Fault detection
 * Quality control
 * Condition monitoring
+* Multivariate process control
 
 ---
 
 ## 🤖 Machine Learning
 
-PCA can help with:
+Applications include:
 
 * Feature reduction
 * Multicollinearity reduction
-* Visualization
 * Noise reduction
-* Data preprocessing
+* Visualization
+* Preprocessing
+* Compression
 
 ---
 
 ## 🖼️ Image Processing
 
-Images may contain thousands or millions of correlated pixel values.
+Images contain highly correlated pixel information.
 
-PCA can approximate the images using fewer dimensions.
+PCA can represent images using fewer dimensions.
+
+Conceptually:
+
+```text
+Thousands of Pixels
+        ↓
+       PCA
+        ↓
+Few Important Components
+```
 
 ---
 
 ## 💰 Finance
 
-PCA can identify common variation across:
+PCA can identify common factors across:
 
-* Assets
+* Stocks
+* Bond yields
 * Interest rates
-* Yield curves
 * Macroeconomic indicators
+* Yield curves
 
 ---
 
-# 23. 🎥 Recommended Video
+# 24. 🏁 Final Mental Model
 
-## StatQuest — Principal Component Analysis (PCA), Step-by-Step
+Think of PCA as:
 
-▶️ **YouTube**
+> 🔄 **Rotate → Rank → Project → Reduce → Interpret**
 
-https://www.youtube.com/watch?v=FgakZw6K1QQ
+---
 
-StatQuest provides an intuitive explanation of:
+## 🔄 Rotate
 
-* PCA
-* Variance
-* Principal-component directions
+Find new directions that better describe variation in the data.
+
+---
+
+## 📊 Rank
+
+Order those directions according to the amount of variance captured.
+
+---
+
+## 📍 Project
+
+Project observations onto the new axes.
+
+---
+
+## ✂️ Reduce
+
+Discard low-variance directions if they contribute little useful information.
+
+---
+
+## 🔎 Interpret
+
+Use:
+
 * Eigenvectors
-* Eigenvalues
-* Dimensionality reduction
+* Loadings
+* Scores
+* Scree plots
+* Score plots
+* Loading plots
+* Biplots
+* Domain knowledge
+
+to understand the data structure.
 
 ---
 
-# 🧠 One-Minute PCA Story
+# 🧠 PCA in One Minute
 
 ```text
 Many correlated variables
@@ -1497,148 +2267,122 @@ Many correlated variables
           ↓
 Covariance / Correlation Matrix
           ↓
-Find directions of maximum variance
+ Eigenvalue Decomposition
           ↓
-      Eigenvectors
+Eigenvectors + Eigenvalues
           ↓
-Measure variance along those directions
-          ↓
-       Eigenvalues
+Principal Components
           ↓
 Project observations
           ↓
-        Scores
+       PC Scores
           ↓
-Keep important PCs
+Calculate Explained Variance
           ↓
-Reduce dimensionality
+Keep Important Components
           ↓
-Interpret using loadings
+Reduce Dimensionality
           ↓
-Visualize / Model / Cluster
+Interpret Loadings
+          ↓
+Visualize / Cluster / Model
 ```
 
 ---
 
-# 🏁 Final Mental Model
+# ⭐ Most Important PCA Relationships
 
-Think of PCA as:
+```text
+Eigenvector
+    ↓
+Direction of a PC
 
-> 🔄 **Rotate → Rank → Project → Reduce → Interpret**
 
-### 🔄 Rotate
+Eigenvalue
+    ↓
+Variance captured by a PC
 
-Find better axes for describing the data.
 
-### 📊 Rank
+Score
+    ↓
+Position of a sample along a PC
 
-Order the axes according to variance captured.
 
-### 📍 Project
-
-Project every observation onto the new axes.
-
-### ✂️ Reduce
-
-Remove directions that contain relatively little variance.
-
-### 🔎 Interpret
-
-Use loadings, scores, visualizations, and domain knowledge to understand the resulting structure.
-
----
-
-# ⭐ Formula Summary
-
-### Standardization
-
-$$
-z
-=
-
-\frac{x-\mu}{\sigma}
-$$
-
-### Covariance
-
-$$
-\operatorname{Cov}(X,Y)
-=======================
-
-\frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{n-1}
-$$
-
-### Eigenvalue Equation
-
-$$
-\mathbf{C}\mathbf{v}
-====================
-
-\lambda\mathbf{v}
-$$
-
-### Principal Component
-
-$$
-PC_k
-====
-
-\mathbf{Z}\mathbf{v}_k
-$$
-
-### All PCA Scores
-
-$$
-\mathbf{T}
-==========
-
-\mathbf{Z}\mathbf{V}
-$$
-
-### Explained Variance Ratio
-
-$$
-EVR_k
-=====
-
-\frac{\lambda_k}
-{\sum_j \lambda_j}
-$$
-
-### PCA Loading
-
-$$
-l_{jk}
-======
-
-v_{jk}\sqrt{\lambda_k}
-$$
-
-### Orthogonal Rotation
-
-$$
-\mathbf{T}_{rotated}
-====================
-
-\mathbf{T}\mathbf{R}
-$$
+Loading
+    ↓
+Relationship between a variable and a PC
+```
 
 ---
 
 # ✅ Final Takeaway
 
-> **PCA finds new orthogonal directions that capture the largest possible amount of variation in a dataset.**
+> **PCA transforms correlated variables into a new set of orthogonal directions that capture decreasing amounts of variance.**
 
-In one line:
+The essential idea is:
 
 ```text
-Original correlated variables
+Original Correlated Variables
             ↓
            PCA
             ↓
-Fewer uncorrelated components
+New Orthogonal Components
             ↓
-Most important variance retained
+Rank by Explained Variance
+            ↓
+Keep Important Components
+            ↓
+Simpler Representation of Data
 ```
 
-> 📊 **PCA = Find the important directions → project the data → keep the useful dimensions.**
+### 📌 PCA in one sentence
+
+> **Find the directions where the data varies most, project the observations onto those directions, and retain the components that preserve the important structure of the dataset.**
+
+---
+
+# 25. 🎥 Recommended Video
+
+## StatQuest: Principal Component Analysis (PCA), Step-by-Step
+
+▶️ **YouTube**
+
+https://www.youtube.com/watch?v=FgakZw6K1QQ
+
+The video provides an intuitive visual explanation of:
+
+* Principal components
+* Variance
+* Eigenvectors
+* Eigenvalues
+* Projection
+* Dimensionality reduction
+* PCA interpretation
+
+---
+
+## 📚 Recommended Learning Order
+
+```text
+1. Understand variance
+        ↓
+2. Understand covariance
+        ↓
+3. Understand standardization
+        ↓
+4. Understand eigenvectors
+        ↓
+5. Understand eigenvalues
+        ↓
+6. Understand PC scores
+        ↓
+7. Understand explained variance
+        ↓
+8. Understand loadings
+        ↓
+9. Understand score plots / biplots
+        ↓
+10. Understand rotation
+```
+
+> 🎯 Once these concepts are connected, PCA becomes much easier to understand than the mathematics initially suggests.
