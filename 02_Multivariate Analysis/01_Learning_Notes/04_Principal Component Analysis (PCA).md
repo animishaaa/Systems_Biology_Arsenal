@@ -285,7 +285,9 @@ PCA needs information about how variables vary together.
 For variables $X$ and $Y$:
 
 $$
-\operatorname{Cov}(X,Y) = \frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{n-1}
+\mathrm{Cov}(X,Y)
+=
+\frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{n-1}
 $$
 
 where:
@@ -331,10 +333,11 @@ No strong linear co-movement.
 For two variables:
 
 $$
-\mathbf{C} =
+\mathbf{C}
+=
 \begin{bmatrix}
-\operatorname{Var}(X_1) & \operatorname{Cov}(X_1,X_2) \
-\operatorname{Cov}(X_2,X_1) & \operatorname{Var}(X_2)
+\mathrm{Var}(X_1) & \mathrm{Cov}(X_1,X_2) \\
+\mathrm{Cov}(X_2,X_1) & \mathrm{Var}(X_2)
 \end{bmatrix}
 $$
 
@@ -363,7 +366,10 @@ The off-diagonal elements contain:
 Correlation standardizes covariance.
 
 $$
-r_{XY} = \frac{\operatorname{Cov}(X,Y)}{\sigma_X\sigma_Y}
+r_{XY}
+=
+\frac{\mathrm{Cov}(X,Y)}
+{\sigma_X\sigma_Y}
 $$
 
 The correlation coefficient satisfies:
@@ -603,7 +609,12 @@ Height  = z₄
 Then:
 
 $$
-\operatorname{Score}_{PC1} = -0.53z_1 - 0.50z_2 + 0.48z_3 + 0.49z_4
+\mathrm{Score}_{PC1}
+=
+-0.53z_1
+-0.50z_2
++0.48z_3
++0.49z_4
 $$
 
 ---
@@ -775,7 +786,7 @@ For standardized PCA or PCA based on a correlation matrix:
 Because:
 
 $$
-\operatorname{Var}(Z)=1
+\mathrm{Var}(Z)=1
 $$
 
 a component with:
@@ -1589,7 +1600,7 @@ $$
 ## Covariance
 
 $$
-\operatorname{Cov}(X,Y) = \frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{n-1}
+\mathrm{Cov}(X,Y) = \frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{n-1}
 $$
 
 ---
@@ -1597,7 +1608,7 @@ $$
 ## Correlation
 
 $$
-r_{XY} = \frac{\operatorname{Cov}(X,Y)}{\sigma_X\sigma_Y}
+r_{XY} = \frac{\mathrm{Cov}(X,Y)}{\sigma_X\sigma_Y}
 $$
 
 ---
