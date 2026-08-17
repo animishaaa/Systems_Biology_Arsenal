@@ -349,7 +349,7 @@ Example
 ```r
 x <- df$Weight[df$Sex=="M"]
 
-hist(x)
+h <- hist(x)
 
 xfit <- seq(65,110)
 
